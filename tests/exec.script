@@ -1,0 +1,235 @@
+Script started on Thu 07 Aug 2014 02:47:18 AM PDT
+~
+svill014@well $ cd cs100/rshell
+~/cs100/rshell
+svill014@well $ make
+echo "building rshell"
+building rshell
+g++ -Wall -Werror -ansi -pedantic src/main.cpp -o bin/rshell
+~/cs100/rshell
+svill014@well $ bin/rshell
+svill014@well.cs.ucr.edu$ uname
+Linux
+svill014@well.cs.ucr.edu$ hostname
+well.cs.ucr.edu
+svill014@well.cs.ucr.edu$ pwd
+/class/classes/svill014/cs100/rshell
+svill014@well.cs.ucr.edu$ ls -a
+.  ..  bin  .git  LICENSE  Makefile  README.md	src  tests
+svill014@well.cs.ucr.edu$ ls -i
+ 8756919 bin	    947858 Makefile   13070315 src
+  947856 LICENSE   8756925 README.md   8756917 tests
+svill014@well.cs.ucr.edu$ ls -l
+total 24
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+-rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+-rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+-rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls -m
+bin, LICENSE, Makefile, README.md, src, tests
+svill014@well.cs.ucr.edu$ ls -n
+total 24
+drwx------ 2 32434 507 4096 Aug  7 02:47 bin
+-rw------- 1 32434 507  779 Aug  7 01:20 LICENSE
+-rw------- 1 32434 507  100 Aug  7 01:20 Makefile
+-rw------- 1 32434 507 2107 Aug  7 01:22 README.md
+drwx------ 2 32434 507 4096 Aug  7 02:46 src
+drwx------ 2 32434 507 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls -r
+tests  src  README.md  Makefile  LICENSE  bin
+svill014@well.cs.ucr.edu$ ls -s
+total 24
+4 bin  4 LICENSE  4 Makefile  4 README.md  4 src  4 tests
+svill014@well.cs.ucr.edu$ ls -l
+total 24
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+-rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+-rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+-rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls -la
+total 36
+drwx------ 6 svill014 classes 4096 Aug  7 02:07 .
+drwx------ 5 svill014 classes 4096 Aug  7 01:20 ..
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+drwx------ 8 svill014 classes 4096 Aug  7 01:22 .git
+-rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+-rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+-rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls -l -a
+total 36
+drwx------ 6 svill014 classes 4096 Aug  7 02:07 .
+drwx------ 5 svill014 classes 4096 Aug  7 01:20 ..
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+drwx------ 8 svill014 classes 4096 Aug  7 01:22 .git
+-rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+-rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+-rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls -a -l
+total 36
+drwx------ 6 svill014 classes 4096 Aug  7 02:07 .
+drwx------ 5 svill014 classes 4096 Aug  7 01:20 ..
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+drwx------ 8 svill014 classes 4096 Aug  7 01:22 .git
+-rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+-rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+-rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ s ls -al
+total 36
+drwx------ 6 svill014 classes 4096 Aug  7 02:07 .
+drwx------ 5 svill014 classes 4096 Aug  7 01:20 ..
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+drwx------ 8 svill014 classes 4096 Aug  7 01:22 .git
+-rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+-rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+-rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls	-l	ls  -s	-a
+total 36
+4 drwx------ 6 svill014 classes 4096 Aug  7 02:07 .
+4 drwx------ 5 svill014 classes 4096 Aug  7 01:20 ..
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+4 drwx------ 8 svill014 classes 4096 Aug  7 01:22 .git
+4 -rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+4 -rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+4 -rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/md0             219524084  95185316 113007728  46% /
+tmpfs                132142680        72 132142608   1% /dev/shm
+138.23.169.6:/vol/courses
+                     117440512 111815360   5625152  96% /courses
+nemo:/vol/vol0/csgrads
+                     714208960 684193664  30015296  96% /home/csgrads
+nemo:/vol/vol0/classes
+                     714208960 684193664  30015296  96% /class/classes
+nemo:/vol/vol0/csprofs
+                     714208960 684193664  30015296  96% /home/csprofs
+nemo:/vol/vol0/csmajs
+                     714208960 684193664  30015296  96% /home/csmajs
+nemo:/vol/vol0/projects
+                     714208960 684193664  30015296  96% /home/projects
+svill014@well.cs.ucr.edu$ df -l
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/md0             219524084  95185316 113007728  46% /
+tmpfs                132142680        72 132142608   1% /dev/shm
+svill014@well.cs.ucr.edu$ df -a
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/md0             219524084  95185316 113007728  46% /
+proc                         0         0         0   -  /proc
+sysfs                        0         0         0   -  /sys
+devpts                       0         0         0   -  /dev/pts
+tmpfs                132142680        72 132142608   1% /dev/shm
+none                         0         0         0   -  /proc/sys/fs/binfmt_misc
+sunrpc                       0         0         0   -  /var/lib/nfs/rpc_pipefs
+138.23.169.6:/vol/courses
+                     117440512 111815360   5625152  96% /courses
+nfsd                         0         0         0   -  /proc/fs/nfsd
+nemo:/vol/vol0/csgrads
+                     714208960 684194208  30014752  96% /home/csgrads
+nemo:/vol/vol0/classes
+                     714208960 684194208  30014752  96% /class/classes
+nemo:/vol/vol0/csprofs
+                     714208960 684194208  30014752  96% /home/csprofs
+nemo:/vol/vol0/csmajs
+                     714208960 684194208  30014752  96% /home/csmajs
+nemo:/vol/vol0/projects
+                     714208960 684194208  30014752  96% /home/projects
+svill014@well.cs.ucr.edu$ df -la
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/md0             219524084  95185316 113007728  46% /
+proc                         0         0         0   -  /proc
+sysfs                        0         0         0   -  /sys
+devpts                       0         0         0   -  /dev/pts
+tmpfs                132142680        72 132142608   1% /dev/shm
+none                         0         0         0   -  /proc/sys/fs/binfmt_misc
+sunrpc                       0         0         0   -  /var/lib/nfs/rpc_pipefs
+nfsd                         0         0         0   -  /proc/fs/nfsd
+svill014@well.cs.ucr.edu$ df -l	la  -a
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/md0             219524084  95185316 113007728  46% /
+proc                         0         0         0   -  /proc
+sysfs                        0         0         0   -  /sys
+devpts                       0         0         0   -  /dev/pts
+tmpfs                132142680        72 132142608   1% /dev/shm
+none                         0         0         0   -  /proc/sys/fs/binfmt_misc
+sunrpc                       0         0         0   -  /var/lib/nfs/rpc_pipefs
+nfsd                         0         0         0   -  /proc/fs/nfsd
+svill014@well.cs.ucr.edu$ ls	-l	-s -a 
+total 36
+4 drwx------ 6 svill014 classes 4096 Aug  7 02:07 .
+4 drwx------ 5 svill014 classes 4096 Aug  7 01:20 ..
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+4 drwx------ 8 svill014 classes 4096 Aug  7 01:22 .git
+4 -rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+4 -rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+4 -rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls -l&
+total 24
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+-rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+-rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+-rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ ls -l	-s	-a&
+total 36
+4 drwx------ 6 svill014 classes 4096 Aug  7 02:07 .
+4 drwx------ 5 svill014 classes 4096 Aug  7 01:20 ..
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:47 bin
+4 drwx------ 8 svill014 classes 4096 Aug  7 01:22 .git
+4 -rw------- 1 svill014 classes  779 Aug  7 01:20 LICENSE
+4 -rw------- 1 svill014 classes  100 Aug  7 01:20 Makefile
+4 -rw------- 1 svill014 classes 2107 Aug  7 01:22 README.md
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:46 src
+4 drwx------ 2 svill014 classes 4096 Aug  7 02:47 tests
+svill014@well.cs.ucr.edu$ echo "hello world"
+"hello world"
+svill014@well.cs.ucr.edu$ touch test1
+svill014@well.cs.ucr.edu$ ls
+bin  LICENSE  Makefile	README.md  src	test1  tests
+svill014@well.cs.ucr.edu$ mkdir test2
+svill014@well.cs.ucr.edu$ ls
+bin  LICENSE  Makefile	README.md  src	test1  test2  tests
+svill014@well.cs.ucr.edu$ cat LICENSE
+<This program does some of the same commands that one can perform in a terminal.>
+    Copyright (C) <2014>  <Sean Villagomez>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+svill014@well.cs.ucr.edu$ basename bin
+bin
+svill014@well.cs.ucr.edu$ This is junk code to show it will not crash.
+execv failed: No such file or directory
+svill014@well.cs.ucr.edu$ date
+Thu Aug  7 02:52:28 PDT 2014
+svill014@well.cs.ucr.edu$ exit
+~/cs100/rshell
+svill014@well $ exit
+exit
+
+Script done on Thu 07 Aug 2014 02:54:06 AM PDT
