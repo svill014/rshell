@@ -5,6 +5,7 @@
 #define BUFSIZE 1024
 using namespace std;
 
+bool ext=false;
 
 int main()
 {
@@ -29,7 +30,6 @@ int main()
 				i=inpt.size();
 			}
 			else if(isspace(inpt[i]))
-			//else if(inpt[i]==' ')
 			{
 				for(unsigned j=i+1; j<inpt.size();j++)
 				{
@@ -63,7 +63,6 @@ int main()
 	//	cout << "commandName: "<<com<<endl;
 		string temp="";
 	//	cout << "argumentList: "<<arg<<endl;
-	//	cout << "last of arg:  " << arg[arg.size()-1] << endl;
 
 		char ** arg2;
 		arg2 = new char*[BUFSIZE];
@@ -92,12 +91,10 @@ int main()
 				word="";
 			}
 			else if(isspace(arg[i]))
-			//else if(arg[i]==' ')
 			{
 				if(i!=0)
 				{
 					if(!isspace(arg[i-1]))
-					//if(arg[i-1]!=' ')
 					{
 					arg2[num+1]=new char[word.size()+1];						strcpy(arg2[num+1], word.c_str() );
 						num++;
@@ -109,14 +106,8 @@ int main()
 			{
 				word=word+arg[i];
 			}
-		}//////////////////////////////////////////////////////////
-	/*	if(isspace(arg2[num][0]))
-		{
-			arg2[num]="\0";
-			num--;
-		}*/
+		}
 		bool f=false;
-	//	cout << "CCCCCCCCCCCCCCCCCCCCCCCCC"<< arg2[num] << endl;
 		for(unsigned j=0;f==false&&arg2[num][j]!='\0'; j++)
 		{
 			if(arg2[num][j]=='&')
@@ -124,27 +115,16 @@ int main()
 				f=true;
 				arg2[num][j]='\0';
 			}
-			else if(isspace(arg2[num][j]))///////anywhitespace
-			//else if(arg2[num][j]==' ')
-//only fixes if there is one space
+			else if(isspace(arg2[num][j]))
 			{
 				arg2[num][j]='\0';
 				j--;
 			}
 			
 		}
-//cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << arg2[num] << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"<< endl << endl;
-		int cnt=0;
-	        while(cnt<=num)
-		{
-	//		cout << "num/cnt:" << num << "/" << cnt << endl;
-	//		cout << arg2[cnt] << endl;
-			cnt++;
-		}
 		int res=fork();
 		if(res==0)
 		{
-			/////
 			if(f)
 			{
 				int res2=fork();
@@ -155,9 +135,10 @@ int main()
 						perror("execv failed");
 						exit(0);
 					}
+
 				}
+				ext=true;
 			}
-			/////
 			else if(-1==execv(str2, arg2))
 			{
 				perror("execv failed");
@@ -165,6 +146,10 @@ int main()
 			}
 		}
 		wait(0);
+		if(f)
+                {
+                        wait(0);
+                }
 
 		for(int i=0; i<BUFSIZE; i++)
 		{
@@ -172,11 +157,8 @@ int main()
 				i=BUFSIZE;
 			delete arg2[i];
 		}
-		cout << "END OF THE CODE\n\n\n><>\n\n";
-		if(f)
-		{
-//			wait(0);
-		}
+		if(ext==true)
+			exit(0);
 	}
 	return 0;
 }
