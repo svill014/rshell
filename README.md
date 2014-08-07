@@ -32,4 +32,4 @@ Makefile contains the code that allows the command [make] to create an executabl
 
 bin
 ======
-bin starts as an empty folder but obtains an executable once the user inputs the command [make]
+bin starts as an empty folder(exept for the file test which exists so this folder can exist) but obtains an executable once the user inputs the command [make]
