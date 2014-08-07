@@ -57,13 +57,13 @@ int main()
 		string str="/bin/";
 		str = str + com;
 		const char* str2 =str.c_str();
-		cout << str2 << endl;
-		cout << "test\n";
-		cout << "input: "<< inpt << endl;
-		cout << "commandName: "<<com<<endl;
+	//	cout << str2 << endl;
+	//	cout << "test\n";
+	//	cout << "input: "<< inpt << endl;
+	//	cout << "commandName: "<<com<<endl;
 		string temp="";
-		cout << "argumentList: "<<arg<<endl;
-		cout << "last of arg:  " << arg[arg.size()-1] << endl;
+	//	cout << "argumentList: "<<arg<<endl;
+	//	cout << "last of arg:  " << arg[arg.size()-1] << endl;
 
 		char ** arg2;
 		arg2 = new char*[BUFSIZE];
@@ -110,13 +110,13 @@ int main()
 				word=word+arg[i];
 			}
 		}//////////////////////////////////////////////////////////
-		if(isspace(arg2[num][0]))
+	/*	if(isspace(arg2[num][0]))
 		{
 			arg2[num]="\0";
 			num--;
-		}
+		}*/
 		bool f=false;
-		cout << "CCCCCCCCCCCCCCCCCCCCCCCCC"<< arg2[num] << endl;
+	//	cout << "CCCCCCCCCCCCCCCCCCCCCCCCC"<< arg2[num] << endl;
 		for(unsigned j=0;f==false&&arg2[num][j]!='\0'; j++)
 		{
 			if(arg2[num][j]=='&')
@@ -133,12 +133,12 @@ int main()
 			}
 			
 		}
-cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << arg2[num] << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"<< endl << endl;
+//cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << arg2[num] << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"<< endl << endl;
 		int cnt=0;
 	        while(cnt<=num)
 		{
-			cout << "num/cnt:" << num << "/" << cnt << endl;
-			cout << arg2[cnt] << endl;
+	//		cout << "num/cnt:" << num << "/" << cnt << endl;
+	//		cout << arg2[cnt] << endl;
 			cnt++;
 		}
 		int res=fork();
@@ -158,7 +158,7 @@ cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << arg2[num] << "BBBBBBBBBB
 				}
 			}
 			/////
-			if(-1==execv(str2, arg2))
+			else if(-1==execv(str2, arg2))
 			{
 				perror("execv failed");
 				exit(0);
