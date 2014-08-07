@@ -13,17 +13,16 @@ int main()
 	{
 		char *mech=new char[BUFSIZE];
 		string user = getlogin();
-		int h = gethostname(mech,BUFSIZE );
-
+		gethostname(mech,BUFSIZE );
+		
 		cout <<user<<"@"<<mech<< "$ ";
 		delete[] mech;
 
-		int numC=0;
 		string inpt="";
 		getline(cin,inpt);
 		string com="";
 		string arg="";
-		for(int i=0; i<inpt.size();i++)
+		for(unsigned i=0; i<inpt.size();i++)
 		{
 			if(inpt[i]=='#')
 			{
@@ -31,7 +30,7 @@ int main()
 			}
 			else if(inpt[i]==' ')
 			{
-				for(int j=i+1; j<inpt.size();j++)
+				for(unsigned j=i+1; j<inpt.size();j++)
 				{
 					if(inpt[j]=='#')
 					{
@@ -72,8 +71,7 @@ int main()
 		arg2[0]=new char[str.size()+1];
 		strcpy(arg2[num], str.c_str() );
 
-		bool andFnd=false;
-		for(int i=0; i<=arg.size(); i++)
+		for(unsigned i=0; i<=arg.size(); i++)
 		{
 			if(arg[i]=='#')
 			{
