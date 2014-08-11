@@ -10,6 +10,18 @@
 
 using namespace std;
 
+void fun(dirrent drent, DIR drp)
+{
+	while ((drentp = readdir(drp)))
+        {
+                cout << drentp->d_name << endl;
+                //recursively
+        }
+}
+
+
+
+
 int main()
 {
 	char *dirName = ".";
@@ -46,11 +58,12 @@ int main()
 
 	///-r
 	cout << "-r\n\n";
-	while ((direntp2 = readdir(dirp2)))
+	
+	/*while ((direntp2 = readdir(dirp2)))
         {
                 cout << direntp2->d_name << endl;
                 //recursively
-        }
+        }*/
 	cout << endl << endl;
 	///
 	while ((direntp = readdir(dirp)))
