@@ -10,13 +10,15 @@
 
 using namespace std;
 
-void fun(dirrent drent, DIR drp)
+void fun(dirent *drentp, DIR *drp)
 {
-	while ((drentp = readdir(drp)))
-        {
-                cout << drentp->d_name << endl;
-                //recursively
-        }
+	//reversed what this ouput but it was not in the right order to begin 
+	//with
+	if(drentp = readdir(drp))
+	{
+		fun(drentp, drp);
+		cout << drentp->d_name << endl;
+	}
 }
 
 
@@ -45,11 +47,11 @@ int main()
 	cout << endl;
 	struct stat s;
 	///-l
-	cout << "-l\n\n";
+	cout << "\n-l\n\n";
 	stat("a.out",&s);
 
 	cout << "s.st_size = " << s.st_size << endl;
-	cout << endl << endl;
+	cout << "\n-l\n\n";
 	///
 
 
@@ -57,17 +59,18 @@ int main()
 	dirent *direntp2;
 
 	///-r
-	cout << "-r\n\n";
-	
+	cout << "\n-r\n\n";
+	fun(direntp2, dirp2);
 	/*while ((direntp2 = readdir(dirp2)))
         {
                 cout << direntp2->d_name << endl;
                 //recursively
         }*/
-	cout << endl << endl;
+	cout << "\n-r\n\n";
 	///
 	while ((direntp = readdir(dirp)))
 	{
+		//not outputting in abc order
 		cout << direntp->d_name << endl;
 		// use stat here to find attributes of file
 		
