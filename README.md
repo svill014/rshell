@@ -1,4 +1,12 @@
-rshell
+ls.cpp
+=====
+ls.cpp implements a subset of the GNU ls command. It supports the -l -a and -R flags and can pass in multiple files. The commands are read in the form bin/ls [flags] [files]. The flags and files can be mixed amongst each other and the program will still work as long as there are spaces between them. Flags can be written together, such as -la, and the program will still compile. The program will be unaffected if the flag or files are used multiple times. Executables are outputed to be blue, directories are green, and hidden files that can only be seen using the flag -a have a gray background.
+
+There is a bug with files that have a '-' in the front of them. They will not be seen as flags and not files.
+
+There is a bug with the flag -R and it would not run correctly but the program still recognizes that the user input the flag.
+
+rshell.cpp
 ======
 
 rshell is a command shell that runs on Linux and will execute the user's commands.  It reads commands on one line. The commands are read in the form ' commandName [argumentList] [&]. 'commandName' is an executable program in '/usr/bin' and 'argumentList' is a list of zero or more words seperated by whitespace. If '&' is at the end of the command, then it will not wait for the command to finish and return to step 1.

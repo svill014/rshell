@@ -1,18 +1,11 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
-
 #include <pwd.h>
-
 #include <vector>
-
-//color
 #include <cstdio>
-
-//stat
 #include <sys/stat.h>
 #include <unistd.h>
-
 #include <iostream>
 
 using namespace std;
@@ -21,11 +14,10 @@ using namespace std;
 int main(int argv, char* argc[])
 {
 	vector<char*> files;
-	bool l=false;
-        bool a=false;
-        bool R=false;
-	int fSize =0;
-	bool all=true;
+	bool l=false;//flag for -l
+        bool a=false;//flag for -a
+        bool R=false;//flag for -R
+	bool all=true;//will change to false if files are passed in
 	for(int j=0; j<argv; j++)
 	{
 		if(argc[j][0]=='-')
@@ -45,16 +37,11 @@ int main(int argv, char* argc[])
 			files.push_back(argc[j]);
 		}
 	}
-	/////////////////////////
-	for(int a=0; a<files.size(); a++)
+	for(unsigned a=0; a<files.size(); a++)
 	{
 		if(files.size()>1)
 			all = false;
-		cout << files.at(a) << endl;
 	}
-	///////////////////////////////
-	cout << endl;
-	cout << all << " :\n";
 	char *dirName = ".";
 	DIR *dirp;
 	if (!(dirp  = opendir(dirName)))
@@ -64,8 +51,6 @@ int main(int argv, char* argc[])
 	}
 
 	struct stat s;
-//	stat("a.out",&s);
-//	int mode = s.st_mode;
 	int color =0;//if 1 it will be blue, if 2 it will be green
 
 	dirent *direntp;
@@ -73,18 +58,12 @@ int main(int argv, char* argc[])
 	{
 		stat(direntp->d_name,&s);
 	        int mode = s.st_mode;
-	    if(all)
+	    if(all)//no files are added, just flags
 	    {
 		if(!a)
 		{
-		 //// int num=files.size();
-		 //// if((fSize<num)||num<=1)
-		 //// {
-		 ////   if((files.at(fSize)==(string)direntp->d_name)||(num<=1))
-		 ////   {
-			if((l)&&(direntp->d_name[0]!='.'))
+			if((l)&&(direntp->d_name[0]!='.'))//-l
 			{
-			//	if(files.at(fSize)==direntp->d_name)
 				if(S_ISDIR(s.st_mode))
 				{
 					color =1;
@@ -222,7 +201,7 @@ int main(int argv, char* argc[])
 				}
 				color =0;
 			}
-			else
+			else//no flags
 			{
 				if(S_ISDIR(s.st_mode))
 				{
@@ -289,18 +268,9 @@ int main(int argv, char* argc[])
 				printf("%c[%dm", 0x1B,49);
 			}
 		}
-/*			if(direntp->d_name[0]!='.')
-			{
-				cout << direntp->d_name;
-				printf("%c[%dm", 0x1B,39);
-				printf("%c[%dm", 0x1B,49);
-				cout << " ";
-
-			}*/
-			
 		else
 		{
-			if(l)
+			if(l)//-l -a
 			{
 				if(S_ISDIR(s.st_mode))
                                 {
@@ -439,7 +409,7 @@ int main(int argv, char* argc[])
 				}
 				color =0;
 			}
-			else
+			else//-a
 			{
 
 				
@@ -513,14 +483,12 @@ int main(int argv, char* argc[])
 	    }
 	    else//this is called if files are also being called
 	    {
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//int fSize=0;
 		if(!a)
 		{
-			if((l)&&(direntp->d_name[0]!='.'))
+			if((l)&&(direntp->d_name[0]!='.'))//-l
 			{
 				bool write=false;
-				for(int f=1; f<files.size(); ++f)
+				for(unsigned f=1; f<files.size(); ++f)
 				{
 					if(files.at(f)==(string)direntp->d_name)
 						write=true;
@@ -670,10 +638,10 @@ int main(int argv, char* argc[])
 				}
 				color =0;
 			}
-			else
+			else//no flags
 			{
 				bool write=false;
-                                for(int f=1; f<files.size(); ++f)
+                                for(unsigned f=1; f<files.size(); ++f)
                                 {
                                         if(files.at(f)==(string)direntp->d_name)
                                                 write=true;
@@ -746,10 +714,10 @@ int main(int argv, char* argc[])
 				}
 			}
 		}
-		else
+		else//-l -a
 		{
 			bool write=false;
-                        for(int f=1; f<files.size(); ++f)
+                        for(unsigned f=1; f<files.size(); ++f)
                         {
                                 if(files.at(f)==(string)direntp->d_name)
                                         write=true;
@@ -893,10 +861,8 @@ int main(int argv, char* argc[])
 				}
 				color =0;
 			}
-			else if(write)
+			else if(write)//-a
 			{
-
-				
 				if(S_ISDIR(s.st_mode))
                                 {
                                         color =1;
@@ -924,12 +890,8 @@ int main(int argv, char* argc[])
 					}
 					cout << 'x';
 				}
-				
-
-
 				if(direntp->d_name[0]=='.')
 				printf("%c[%dm", 0x1B,47);
-			
 				if(color==0)
 				{
 					if(direntp->d_name[0]=='.')
@@ -964,7 +926,6 @@ int main(int argv, char* argc[])
 				printf("%c[%dm", 0x1B,49);
 			}
 		}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	    }
 	}
 	closedir(dirp);
