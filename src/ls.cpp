@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 	bool l=true;
-        bool a=false;
+        bool a=true;
         bool R=false;
 
 
@@ -31,113 +31,20 @@ int main()
 		return errno;
 	}
 
-
 	cout << endl;
 	struct stat s;
-	///-l
-	cout << "\n-l\n\n";
-	stat("a.out",&s);
-	///
-//	cout << s.st_dev;     /* ID of device containing file */
-//	cout << s.st_ino;     /* inode number */
-	int mode = s.st_mode;
-int color =0;//if 1 it will be blue, if 2 it will be green
-if(l)
-{
-	//if d then make the color = 1 (blue)
-	cout << '-';
-	if(mode&S_IRUSR)
-		cout << 'r';
-	else
-		cout << '-';
-	if(mode&S_IWUSR)
-                cout << 'w';
-        else 
-                cout << '-';
-	if(mode&S_IXUSR)
-	{
-		if( color==0)
-		{
-			color =2;
-		}
-                cout << 'x';
-	}
-        else 
-                cout << '-';
-	if(mode&S_IRGRP)
-                cout << 'r';
-        else 
-                cout << '-';
-        if(mode&S_IWGRP)
-                cout << 'w';
-        else 
-                cout << '-';
-        if(mode&S_IXGRP)
-        {
-                if( color==0)
-                {
-                        color =2;
-                }
-                cout << 'x';
-        }
-        else
-                cout << '-';
-	if(mode&S_IROTH)
-                cout << 'r';
-        else
-                cout << '-';
-        if(mode&S_IWOTH)
-                cout << 'w';
-        else
-                cout << '-';
-        if(mode&S_IXOTH)
-        {
-                if( color==0)
-                {
-                        color =2;
-                }
-                cout << 'x';
-        }
-        else
-                cout << '-';
-
-	cout << " " << s.st_nlink << " ";
-	struct passwd *name;
-        if (getpwuid(s.st_uid)==NULL)
-        {
-               	perror("getpwuid failed");
-		exit(0);
-        }
-        name = getpwuid(s.st_uid);
-	cout << name->pw_name<<" ";
-
-	///
-	cout << "color: " << color << endl;
-	color =0;
-}	/* protection */
-//	cout << s.st_nlink;   /* number of hard links */
-//	cout << s.st_uid;     /* user ID of owner */
-//	cout << s.st_gid;     /* group ID of owner */
-//	cout << s.st_rdev;    /* device ID (if special file) */
-//	cout << s.st_size;    /* total size, in bytes */
-//	cout << s.st_blksize; /* blocksize for file system I/O */
-//	cout << s.st_blocks;  /* number of 512B blocks allocated */
-//	cout << s.st_atime;   /* time of last access */
-//	cout << s.st_mtime;   /* time of last modification */
-//	cout << s.st_ctime;
-	///
-	cout << endl;
-	cout << "s.st_size = " << s.st_size << endl;
-	cout << "\n-l\n\n";
-	///
-
+//	stat("a.out",&s);
+//	int mode = s.st_mode;
+	int color =0;//if 1 it will be blue, if 2 it will be green
 
 	dirent *direntp;
 	
 
-/*
+
 	while ((direntp = readdir(dirp)))
 	{
+		stat(direntp->d_name,&s);
+	        int mode = s.st_mode;
 		if(!a)
 		{
 			if(direntp->d_name[0]!='.')
@@ -151,22 +58,160 @@ if(l)
 		}
 		else
 		{
-			
-			//if executable then green
-				//printf("%c[%dm", 0x1B,32);
-			//if folder then blue
-				//printf("%c[%dm", 0x1B,34);
+			if(l)
+			{
+				//if d then make the color = 1 (blue)
+				//cout << '-';
+				//if(S_ISDIR)
+				if(S_ISDIR(s.st_mode))
+                                {
+                                        color =1;
+                                        cout << 'd';
+                                }
+                                else
+                                        cout << '-';
+				if(mode&S_IRUSR)
+					cout << 'r';
+				else
+					cout << '-';
+				if(mode&S_IWUSR)
+					cout << 'w';
+				else 
+					cout << '-';
+				if(mode&S_IXUSR)
+				{
+					if( color==0)
+					{
+						color =2;
+					}
+					cout << 'x';
+				}
+				else 
+					cout << '-';
+				if(mode&S_IRGRP)
+					cout << 'r';
+				else 
+					cout << '-';
+				if(mode&S_IWGRP)
+					cout << 'w';
+				else 
+					cout << '-';
+				if(mode&S_IXGRP)
+				{
+					if( color==0)
+					{
+						color =2;
+					}
+					cout << 'x';
+				}
+				else
+					cout << '-';
+				if(mode&S_IROTH)
+					cout << 'r';
+				else
+					cout << '-';
+				if(mode&S_IWOTH)
+					cout << 'w';
+				else
+					cout << '-';
+				if(mode&S_IXOTH)
+				{
+					if( color==0)
+					{
+						color =2;
+					}
+					cout << 'x';
+				}
+				else
+					cout << '-';
+
+				cout << " " << s.st_nlink << " ";
+				struct passwd *name;
+				if (getpwuid(s.st_uid)==NULL)
+				{
+					perror("getpwuid failed");
+					exit(0);
+				}
+				name = getpwuid(s.st_uid);
+				cout << name->pw_name<<" ";
+				
+				string temp = name->pw_dir;
+				string temp2="";
+				int slash =0;
+				int i=0;
+				while(slash<3)
+				{
+					if(temp[i]=='/')
+					{
+						slash++;
+					}
+					else if(slash==2)
+					{
+						temp2=temp2+temp[i];
+					}
+					i++;
+				}
+				cout << temp2 << ' ';
+				int size=s.st_size;
+				if(size>10000)
+					cout << size << ' ';
+				else if (size>=1000)
+					cout <<" " << size << ' ';
+				else if (size>=100)
+					cout <<"  " << size << ' ';
+				else if (size>=10)
+					cout <<"   " << size << ' ';
+				else if (size>=0)
+					cout <<"    " << size << ' ';
+				struct tm* time;
+				char buff[20];
+				time = localtime(&(s.st_mtime));
+				strftime(buff,20, "%b %d %H:%M", time);
+				printf("%s",buff);
+				cout << ' ';
+				if(color==0)
+				{
+					if(direntp->d_name[0]=='.')
+                	                	printf("%c[%dm", 0x1B,47);
+		                        cout << direntp->d_name;
+					printf("%c[%dm", 0x1B,39);
+                                        printf("%c[%dm", 0x1B,49);
+                                        cout << "\n";
+				}
+				else if(color==1)
+				{
+					if(direntp->d_name[0]=='.')
+                		                printf("%c[%dm", 0x1B,47);
+					printf("%c[%dm", 0x1B,34);
+					cout << direntp->d_name;
+					printf("%c[%dm", 0x1B,39);
+                                        printf("%c[%dm", 0x1B,49);
+                                        cout << "/\n";
+				}
+				else if(color==2)
+				{
+					if(direntp->d_name[0]=='.')
+                                                printf("%c[%dm", 0x1B,47);
+                                        printf("%c[%dm", 0x1B,32);
+                                        cout << direntp->d_name;
+					printf("%c[%dm", 0x1B,39);
+		                        printf("%c[%dm", 0x1B,49);
+					cout << "*\n";
+				}
+				color =0;
+			}
+		/*	
 			if(direntp->d_name[0]=='.')
 				printf("%c[%dm", 0x1B,47);
 			cout << direntp->d_name;
-		// use stat here to find attributes of file
+		// use stat here bbto find attributes of file
 			printf("%c[%dm", 0x1B,39);
 			printf("%c[%dm", 0x1B,49);
-			cout << " ";
+			cout << " ";*/
 		}
 	}
 	cout << endl << endl;
-*/
+
 	closedir(dirp);
 
 	return 0;
