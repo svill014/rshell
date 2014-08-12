@@ -99,10 +99,9 @@ if(l)
                 cout << 'x';
         }
         else
-                cout << "- ";
+                cout << '-';
 
-	///user id/name?
-
+	cout << " " << s.st_nlink << " ";
 	struct passwd *name;
         if (getpwuid(s.st_uid)==NULL)
         {
@@ -110,7 +109,7 @@ if(l)
 		exit(0);
         }
         name = getpwuid(s.st_uid);
-	cout << name->pw_name<< endl;
+	cout << name->pw_name<<" ";
 
 	///
 	cout << "color: " << color << endl;
