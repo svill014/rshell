@@ -928,8 +928,8 @@ int main(int argv, char* argc[])
 		}
 	    }
 	}
-	closedir(dirp);
 	cout << endl;
+	closedir(dirp);
 	return 0;
 }
 
