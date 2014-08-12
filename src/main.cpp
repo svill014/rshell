@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #define BUFSIZE 1024
 using namespace std;
-
+    
 bool ext=false;
 
 int main()
