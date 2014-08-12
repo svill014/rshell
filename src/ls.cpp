@@ -47,7 +47,6 @@ int main(int argv, char* argc[])
 		return errno;
 	}
 
-	cout << endl;
 	struct stat s;
 //	stat("a.out",&s);
 //	int mode = s.st_mode;
@@ -490,8 +489,6 @@ int main(int argv, char* argc[])
 			}
 		}
 	}
-	cout << endl << endl;
-
 	closedir(dirp);
 
 	return 0;
