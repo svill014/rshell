@@ -57,24 +57,26 @@ int main()
 
 	dirent *direntp;
 	dirent *direntp2;
+	
 
-	///-r
-	cout << "\n-r\n\n";
-	fun(direntp2, dirp2);
-	/*while ((direntp2 = readdir(dirp2)))
-        {
-                cout << direntp2->d_name << endl;
-                //recursively
-        }*/
-	cout << "\n-r\n\n";
-	///
+
+	bool a=true;
 	while ((direntp = readdir(dirp)))
 	{
-		//not outputting in abc order
-		cout << direntp->d_name << endl;
+		if(!a)
+		{
+			if(direntp->d_name[0]!='.')
+			{
+				cout << direntp->d_name << " ";
+			}
+		}
+		else
+		{
+			cout << direntp->d_name << " ";
 		// use stat here to find attributes of file
-		
+		}
 	}
+	cout << endl << endl;
 	closedir(dirp);
 
 	return 0;
