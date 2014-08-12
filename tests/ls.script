@@ -1,0 +1,139 @@
+Script started on Tue 12 Aug 2014 01:50:26 PM PDT
+~
+svill014@well $ cd cs100/rshell
+~/cs100/rshell
+svill014@well $ make
+echo "building rshell"
+building rshell
+g++ -Wall -Werror -ansi -pedantic src/main.cpp -o bin/rshell
+echo "building ls"
+building ls
+g++ -Wall -Werror -ansi -pedantic src/ls.cpp -o bin/ls
+~/cs100/rshell
+svill014@well $ clear
+[H[2J~/cs100/rshell
+svill014@well $ bin/ls
+[34m[39m[49m[34m[39m[49m[34m[39m[49mLICENSE[39m[49m [39m[49mMakefile[39m[49m [39m[49mREADME.md[39m[49m [39m[49m[34mbin[39m[49m/ [39m[49m[34msrc[39m[49m/ [39m[49m[34mtests[39m[49m/ [39m[49m[32ma.out[39m[49m* [39m[49m
+~/cs100/rshell
+svill014@well $ bin/ls -l
+[34m[39m[49m[34m[39m[49m[34m[39m[49m-rw------- 1 svill014 classes   779 Aug 10 22:58 LICENSE[39m[49m
+-rw------- 1 svill014 classes   261 Aug 12 13:00 Makefile[39m[49m
+-rw------- 1 svill014 classes  2963 Aug 12 13:37 README.md[39m[49m
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mbin[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mtests[39m[49m/
+-rwx------ 1 svill014 classes 37195 Aug 12 13:19 [32ma.out[39m[49m*
+
+~/cs100/rshell
+svill014@well $ bin/ls -a
+[47m[47m[34m.[39m[49m/ [39m[49m[47m[47m[34m..[39m[49m/ [39m[49m[47m[47m[34m.git[39m[49m/ [39m[49mLICENSE[39m[49m [39m[49mMakefile[39m[49m [39m[49mREADME.md[39m[49m [39m[49m[34mbin[39m[49m/ [39m[49m[34msrc[39m[49m/ [39m[49m[34mtests[39m[49m/ [39m[49m[32ma.out[39m[49m* [39m[49m
+~/cs100/rshell
+svill014@well $ bin/ls -l -a
+drwx------ 6 svill014 classes  4096 Aug 12 13:37 [47m[34m.[39m[49m/
+drwx------ 5 svill014 classes  4096 Aug 10 22:58 [47m[34m..[39m[49m/
+drwx------ 8 svill014 classes  4096 Aug 12 13:46 [47m[34m.git[39m[49m/
+-rw------- 1 svill014 classes   779 Aug 10 22:58 LICENSE[39m[49m
+-rw------- 1 svill014 classes   261 Aug 12 13:00 Makefile[39m[49m
+-rw------- 1 svill014 classes  2963 Aug 12 13:37 README.md[39m[49m
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mbin[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mtests[39m[49m/
+-rwx------ 1 svill014 classes 37195 Aug 12 13:19 [32ma.out[39m[49m*
+
+~/cs100/rshell
+svill014@well $ bin/ls -a -l
+drwx------ 6 svill014 classes  4096 Aug 12 13:37 [47m[34m.[39m[49m/
+drwx------ 5 svill014 classes  4096 Aug 10 22:58 [47m[34m..[39m[49m/
+drwx------ 8 svill014 classes  4096 Aug 12 13:46 [47m[34m.git[39m[49m/
+-rw------- 1 svill014 classes   779 Aug 10 22:58 LICENSE[39m[49m
+-rw------- 1 svill014 classes   261 Aug 12 13:00 Makefile[39m[49m
+-rw------- 1 svill014 classes  2963 Aug 12 13:37 README.md[39m[49m
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mbin[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mtests[39m[49m/
+-rwx------ 1 svill014 classes 37195 Aug 12 13:19 [32ma.out[39m[49m*
+
+~/cs100/rshell
+svill014@well $ bin/ls -la
+drwx------ 6 svill014 classes  4096 Aug 12 13:37 [47m[34m.[39m[49m/
+drwx------ 5 svill014 classes  4096 Aug 10 22:58 [47m[34m..[39m[49m/
+drwx------ 8 svill014 classes  4096 Aug 12 13:46 [47m[34m.git[39m[49m/
+-rw------- 1 svill014 classes   779 Aug 10 22:58 LICENSE[39m[49m
+-rw------- 1 svill014 classes   261 Aug 12 13:00 Makefile[39m[49m
+-rw------- 1 svill014 classes  2963 Aug 12 13:37 README.md[39m[49m
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mbin[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mtests[39m[49m/
+-rwx------ 1 svill014 classes 37195 Aug 12 13:19 [32ma.out[39m[49m*
+
+~/cs100/rshell
+svill014@well $ bion[K[Kn/ls -al
+drwx------ 6 svill014 classes  4096 Aug 12 13:37 [47m[34m.[39m[49m/
+drwx------ 5 svill014 classes  4096 Aug 10 22:58 [47m[34m..[39m[49m/
+drwx------ 8 svill014 classes  4096 Aug 12 13:46 [47m[34m.git[39m[49m/
+-rw------- 1 svill014 classes   779 Aug 10 22:58 LICENSE[39m[49m
+-rw------- 1 svill014 classes   261 Aug 12 13:00 Makefile[39m[49m
+-rw------- 1 svill014 classes  2963 Aug 12 13:37 README.md[39m[49m
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mbin[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mtests[39m[49m/
+-rwx------ 1 svill014 classes 37195 Aug 12 13:19 [32ma.out[39m[49m*
+
+~/cs100/rshell
+svill014@well $ bin/ls -al -la -l -a -aa -a
+drwx------ 6 svill014 classes  4096 Aug 12 13:37 [47m[34m.[39m[49m/
+drwx------ 5 svill014 classes  4096 Aug 10 22:58 [47m[34m..[39m[49m/
+drwx------ 8 svill014 classes  4096 Aug 12 13:46 [47m[34m.git[39m[49m/
+-rw------- 1 svill014 classes   779 Aug 10 22:58 LICENSE[39m[49m
+-rw------- 1 svill014 classes   261 Aug 12 13:00 Makefile[39m[49m
+-rw------- 1 svill014 classes  2963 Aug 12 13:37 README.md[39m[49m
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mbin[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+drwx------ 2 svill014 classes  4096 Aug 12 13:50 [34mtests[39m[49m/
+-rwx------ 1 svill014 classes 37195 Aug 12 13:19 [32ma.out[39m[49m*
+
+~/cs100/rshell
+svill014@well $ bin/ls src
+[34msrc[39m[49m/ [39m[49m
+~/cs100/rshell
+svill014@well $ bin/ls src -l
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+
+~/cs100/rshell
+svill014@well $ bin/ls src -a
+[34msrc[39m[49m/ [39m[49m
+~/cs100/rshell
+svill014@well $ bin/ls src -la
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+
+~/cs100/rshell
+svill014@well $ bin/ls src -l -a
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+
+~/cs100/rshell
+svill014@well $ bin/ls src -l a.out -a Makefile
+-rw------- 1 svill014 classes   261 Aug 12 13:00 Makefile[39m[49m
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+-rwx------ 1 svill014 classes 37195 Aug 12 13:19 [32ma.out[39m[49m*
+
+~/cs100/rshell
+svill014@well $ bin/ls src -l -a NotAFile
+drwx------ 2 svill014 classes  4096 Aug 12 13:46 [34msrc[39m[49m/
+
+~/cs100/rshell
+svill014@well $ bin/ls 
+[34m[39m[49m[34m[39m[49m[34m[39m[49mLICENSE[39m[49m [39m[49mMakefile[39m[49m [39m[49mREADME.md[39m[49m [39m[49m[34mbin[39m[49m/ [39m[49m[34msrc[39m[49m/ [39m[49m[34mtests[39m[49m/ [39m[49m[32ma.out[39m[49m* [39m[49m
+~/cs100/rshell
+svill014@well $ bin/ls -a
+[47m[47m[34m.[39m[49m/ [39m[49m[47m[47m[34m..[39m[49m/ [39m[49m[47m[47m[34m.git[39m[49m/ [39m[49mLICENSE[39m[49m [39m[49mMakefile[39m[49m [39m[49mREADME.md[39m[49m [39m[49m[34mbin[39m[49m/ [39m[49m[34msrc[39m[49m/ [39m[49m[34mtests[39m[49m/ [39m[49m[32ma.out[39m[49m* [39m[49m
+~/cs100/rshell
+svill014@well $ bin/ls -a .
+[47m[47m[34m.[39m[49m/ [39m[49m
+~/cs100/rshell
+svill014@well $ bin/ls .
+[34m[39m[49m
+~/cs100/rshell
+svill014@well $ exit
+exit
+
+Script done on Tue 12 Aug 2014 01:54:20 PM PDT
