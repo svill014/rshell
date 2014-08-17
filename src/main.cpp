@@ -38,6 +38,10 @@ int main()
 		}////////////////////////////////////// added perror
 		string com="";
 		string arg="";
+
+		bool skip1=false;
+		bool skip2=false;// used to help "<<<" and ">>" work
+
 		for(unsigned i=0; i<inpt.size();i++)
 		{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,38 +49,102 @@ int main()
 			{
 				i=inpt.size();
 			}
-			else if( (isspace(inpt[i])) || (inpt[i]=='<') )
+			else if( (isspace(inpt[i])) || (inpt[i]=='<')|| (inpt[i]=='>')|| (inpt[i]=='|'))
 			{
-				if(inpt[i]=='<')
+				if(inpt[i]=='<')//< or <<<
 				{
-					cout << inpt.size()<< endl;
-					cout << i << endl;
 					if(inpt.size()-i >=3)
 					{
 						if( (inpt[i+1]=='<')&&(inpt[i+2]=='<' ))
+						{
+							skip2=true;
 							arg= " <<< ";
+						}
+						else
+						{
+							arg = " < ";
+						}
 					}
 					else
 						arg = " < ";
 				}
+				else if(inpt[i]=='>')//> or >>
+				{
+					cout << inpt.size()<< endl;
+					cout << i << endl;
+					if(inpt.size()-i >=2)
+					{
+						if(inpt[i+1]=='>')
+						{
+							skip1=true;
+							arg= " >> ";
+						}
+						else
+						{
+							arg = " > ";
+						}
+					}
+					else
+						arg = " > ";
+				}
+				else if(inpt[i]=='|')// |
+				{
+					arg = " | ";
+				}
+				////////////////////////////////
 				for(unsigned j=i+1; j<inpt.size();j++)
 				{
+					if(skip2)
+					{
+						skip2=false;
+						j=j+2;
+					}
+					if(skip1)
+					{
+						skip1=false;
+						j++;
+					}
 					if( inpt[j]=='#')
 					{
 						j=inpt.size();
 					}
-					else if(inpt[j]=='<')
+					else if(inpt[j]=='<')//< or <<<
 					{
 						if(inpt.size()-j >=3)
 						{
 							if( ((inpt[j+1])=='<')&&(inpt[j+2]=='<') )
 							{
-								arg= " <<< ";
+								arg=arg+ " <<< ";
 								j=j+2;
+							}
+							else
+							{
+								arg =arg+" < ";
 							}
 						}
 						else
 							arg = arg+ " < ";
+					}
+					else if(inpt[j]=='>')//> or >>
+					{
+						if(inpt.size()-j >=2)
+						{
+							if ((inpt[j+1])=='>')
+							{
+								arg=arg+ " >> ";
+								j=j+1;
+							}
+							else
+							{
+								arg =arg+" > ";
+							}
+						}
+						else
+							arg = arg+ " > ";
+					}
+					else if(inpt[j]=='|')//|
+					{
+						arg = arg+ " | ";
 					}
 					else
 					{
@@ -110,7 +178,7 @@ int main()
 		int num=0;
 		string  word="";
 		arg2[0]=new char[str.size()+1];
-		strcpy(arg2[num], str.c_str() );
+		strcpy(arg2[num], str.c_str() );///////////////////////////////////////////////////////////////////////////////
 
 		unsigned i=0;
 		for(i=0; i<=arg.size(); i++)
@@ -163,7 +231,14 @@ int main()
 			}
 			
 		}
-		int res=fork();////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////
+		for(unsigned j=1; j<=num; j++)
+		{
+			cout << arg2[j] << endl;
+		}
+		cout << endl;
+		///////////////////////////////////////////////////////////
+		int res=fork();
 		if(res==0)
 		{
 			if(f)
