@@ -3,6 +3,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #define BUFSIZE 1024
+#include <sys/stat.h>
+#include <fcntl.h>
 using namespace std;
     
 bool ext=false;
@@ -231,7 +233,7 @@ int main()
 		//////////////////////////////////////////////////////////
 		for(unsigned j=1; j<=num; j++)
 		{
-			cout << arg2[j] << endl;
+			cout <<"::::" <<arg2[j]<<":::" << endl;
 		}
 		cout << endl;
 		///////////////////////////////////////////////////////////
@@ -239,14 +241,18 @@ int main()
 		if(res==0)
 		{
 			///////////////////////////////////////
-
-
+			
+			
 			///////////////////////////////
+			/*
 			if(f)
 			{
 				int res2=fork();
 				if(res2==0)
 				{
+					cout << arg2[1]<<endl;
+					if(arg2[2][0]=='>')
+						cout << "found it\n";
 					if(-1==execv(str2, arg2))
 					{
 						perror("execv failed");
@@ -255,18 +261,54 @@ int main()
 
 				}
 				ext=true;
+			}*/
+
+			bool meh = true;
+			for(unsigned j=2; j<num; j++)
+			{
+				cout << "NNNNNNNNNNNNNNNNN" << endl;
+				cout << arg2[j] << endl;
+				string st = arg2[j];
+				if(st==">")
+				{
+					meh=false;
+					cout << "LLLLLLLLLLLLLLLLLLLLLL"<<endl;
+					int res2=fork();
+					if(res==0)
+					{
+						int fd = open(arg2[j+1], O_WRONLY|O_CREAT);
+						if(fd==-1)
+						{
+							perror("open failed");
+							exit(1);
+						}
+						close(1);
+						int fd2=dup(fd);
+						/////////////////////////////////////////////////////////////
+						//the redirection works, but it redirects too much. This includes the '>'
+///////////////////////////////////////////////////////////////////////////////////////////////////
+						if(-1==execv(str2,arg2))
+						{
+							perror("execv failed");
+							exit(1);
+						}
+					}
+				}
 			}
-			else if(-1==execv(str2, arg2))
+			cout << arg2[2] << endl;
+			if((-1==execv(str2, arg2))&&meh)
+			//else if(-1==execv(str2, arg2))
 			{
 				perror("execv failed");
 				exit(0);
 			}
 		}
 		wait(0);
+		/*
 		if(f)
                 {
                         wait(0);
-                }
+                }*/
 
 		for(int i=0; i<BUFSIZE; i++)
 		{
