@@ -13,29 +13,70 @@ int main()
 	while (s!="exit")
 	{
 		char *mech=new char[BUFSIZE];
-		string user = getlogin();
-		gethostname(mech,BUFSIZE );
+		string user;
+		if(( getlogin() )==NULL)
+		{
+			perror("getlogin failed");
+                        exit(0);
+		}/////////// added perror
+		else
+			user = getlogin();///////////////////////ask professor
+		if(gethostname(mech,BUFSIZE)==-1)
+		{
+			perror("gethostname failed");
+			exit(0);
+		}/////////////////////// added perror
 		
 		cout <<user<<"@"<<mech<< "$ ";
 		delete[] mech;
 
 		string inpt="";
-		getline(cin,inpt);
+		if(!getline(cin,inpt) )
+		{
+			perror("getline failed");
+			exit(0);
+		}////////////////////////////////////// added perror
 		string com="";
 		string arg="";
 		for(unsigned i=0; i<inpt.size();i++)
 		{
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			if(inpt[i]=='#')
 			{
 				i=inpt.size();
 			}
-			else if(isspace(inpt[i]))
+			else if( (isspace(inpt[i])) || (inpt[i]=='<') )
 			{
+				if(inpt[i]=='<')
+				{
+					cout << inpt.size()<< endl;
+					cout << i << endl;
+					if(inpt.size()-i >=3)
+					{
+						if( (inpt[i+1]=='<')&&(inpt[i+2]=='<' ))
+							arg= " <<< ";
+					}
+					else
+						arg = " < ";
+				}
 				for(unsigned j=i+1; j<inpt.size();j++)
 				{
-					if(inpt[j]=='#')
+					if( inpt[j]=='#')
 					{
 						j=inpt.size();
+					}
+					else if(inpt[j]=='<')
+					{
+						if(inpt.size()-j >=3)
+						{
+							if( ((inpt[j+1])=='<')&&(inpt[j+2]=='<') )
+							{
+								arg= " <<< ";
+								j=j+2;
+							}
+						}
+						else
+							arg = arg+ " < ";
 					}
 					else
 					{
@@ -57,13 +98,13 @@ int main()
 		string str="/bin/";
 		str = str + com;
 		const char* str2 =str.c_str();
-	//	cout << str2 << endl;
-	//	cout << "test\n";
-	//	cout << "input: "<< inpt << endl;
-	//	cout << "commandName: "<<com<<endl;
+		////////////////////////////////////////////
+		cout << str2 << endl;
+		cout << "input: "<< inpt << endl;
+		cout << "commandName: "<<com<<endl;
+		cout << "argumentList: "<<arg<<endl;
+		////////////////////////////////////////////
 		string temp="";
-	//	cout << "argumentList: "<<arg<<endl;
-
 		char ** arg2;
 		arg2 = new char*[BUFSIZE];
 		int num=0;
@@ -77,7 +118,7 @@ int main()
 			if(arg[i]=='#')
 			{
 				
-				strcpy(arg2[num+1], word.c_str() );
+				strcpy(arg2[num+1], word.c_str() );//////////////////////////////////////////////////////////////////////////////////
 				num++;
 				word="";
 				i=arg.size();
@@ -86,17 +127,17 @@ int main()
 			{
 				word=word+arg[i];
 				arg2[num+1]=new char[word.size()+1];
-				strcpy(arg2[num+1], word.c_str() );
+				strcpy(arg2[num+1], word.c_str() );////////////////////////////////////////////////////////////
 				num++;
 				word="";
 			}
-			else if(isspace(arg[i]))
+			else if(isspace(arg[i]))/////////////////////////////////////////////////////////////////
 			{
 				if(i!=0)
 				{
 					if(!isspace(arg[i-1]))
 					{
-					arg2[num+1]=new char[word.size()+1];						strcpy(arg2[num+1], word.c_str() );
+					arg2[num+1]=new char[word.size()+1];						strcpy(arg2[num+1], word.c_str() );////////////////////////////////////////////////////////////
 						num++;
 						word="";
 					}
@@ -122,7 +163,7 @@ int main()
 			}
 			
 		}
-		int res=fork();
+		int res=fork();////////////////////////////////////////////////////////////////////////////////////////
 		if(res==0)
 		{
 			if(f)
