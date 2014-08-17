@@ -70,8 +70,6 @@ int main()
 				}
 				else if(inpt[i]=='>')//> or >>
 				{
-					cout << inpt.size()<< endl;
-					cout << i << endl;
 					if(inpt.size()-i >=2)
 					{
 						if(inpt[i+1]=='>')
@@ -91,7 +89,6 @@ int main()
 				{
 					arg = " | ";
 				}
-				////////////////////////////////
 				for(unsigned j=i+1; j<inpt.size();j++)
 				{
 					if(skip2)
@@ -142,7 +139,7 @@ int main()
 						else
 							arg = arg+ " > ";
 					}
-					else if(inpt[j]=='|')//|
+					else if(inpt[j]=='|')// |
 					{
 						arg = arg+ " | ";
 					}
@@ -241,6 +238,10 @@ int main()
 		int res=fork();
 		if(res==0)
 		{
+			///////////////////////////////////////
+
+
+			///////////////////////////////
 			if(f)
 			{
 				int res2=fork();
