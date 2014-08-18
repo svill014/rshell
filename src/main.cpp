@@ -238,6 +238,11 @@ int main()
 		cout << endl;
 		///////////////////////////////////////////////////////////
 		int res=fork();
+		if(res==-1)
+		{
+			perror("fork failed");
+			exit(1);
+		}
 		if(res==0)
 		{
 			///////////////////////////////////////
@@ -263,47 +268,138 @@ int main()
 				ext=true;
 			}*/
 
-			bool meh = true;
-			for(unsigned j=2; j<num; j++)
+			/////
+			char ** arg3;
+	                arg3 = new char*[BUFSIZE];
+			/////
+
+			bool norm = true;
+			for(unsigned j=1; j<num; j++)
 			{
 				cout << "NNNNNNNNNNNNNNNNN" << endl;
 				cout << arg2[j] << endl;
 				string st = arg2[j];
-				if(st==">")
+				if(st==">")//replaces chars from the old file
 				{
-					meh=false;
+					norm=false;
 					cout << "LLLLLLLLLLLLLLLLLLLLLL"<<endl;
 					int res2=fork();
+					if(res2==-1)
+					{
+						perror("fork failed");
+						exit(1);
+					}
 					if(res==0)
 					{
-						int fd = open(arg2[j+1], O_WRONLY|O_CREAT);
+						int fd = open(arg2[j+1], O_RDWR|O_CREAT);
 						if(fd==-1)
 						{
 							perror("open failed");
 							exit(1);
 						}
-						close(1);
+						if(-1==ftruncate(fd, 1) )
+						{
+							perror("ftruncate failed");
+							exit(1);
+						}
+						/*
+						if(-1==write(fd,"",1))
+						{
+							perror("write failed");
+							exit(1);
+						}*/
+						if(close(1)==-1)
+						{
+							perror("close failed");
+							exit(1);
+						}
 						int fd2=dup(fd);
-						/////////////////////////////////////////////////////////////
-						//the redirection works, but it redirects too much. This includes the '>'
-///////////////////////////////////////////////////////////////////////////////////////////////////
-						if(-1==execv(str2,arg2))
+						if(fd2==-1)
+                                                {
+                                                        perror("dup failed");
+                                                        exit(1);
+                                                }
+						for(unsigned k=0;k<j; k++)
+						{
+							arg3[k]=arg2[k];
+						}
+						if(-1==execv(str2,arg3))
 						{
 							perror("execv failed");
 							exit(1);
 						}
 					}
+					if(-1==wait(0))
+					{
+						perror("wait failed");
+						exit(1);
+					}
+				}
+			////////////////////////	
+				else if(st==">>")//does it twice
+				{
+					cout << "TTTTTTTT" << endl;
+					norm=false;
+					cout << ">> >> >> >> >> >>"<<endl;
+					int res2=fork();
+					if(res2==-1)
+					{
+						perror("fork failed");
+						exit(1);
+					}
+					if(res2==0)
+					{
+						int fd = open(arg2[j+1], O_RDWR|O_CREAT|O_APPEND);
+						if(fd==-1)
+						{
+							perror("open failed");
+							exit(1);
+						}
+						if(close(1)==-1)
+						{
+							perror("close failed");
+							exit(1);
+						}
+						int fd2=dup(fd);
+						if(fd2==-1)
+                                                {
+                                                        perror("dup failed");
+                                                        exit(1);
+                                                }
+						for(unsigned k=0;k<j; k++)
+						{
+							arg3[k]=arg2[k];
+						}
+						if(-1==execv(str2,arg3))
+						{
+							perror("execv failed");
+							exit(1);
+						}
+					}
+					if(-1==wait(0))
+					{
+						perror("wait failed");
+						exit(1);
+					}
+					exit(0);
 				}
 			}
-			cout << arg2[2] << endl;
-			if((-1==execv(str2, arg2))&&meh)
-			//else if(-1==execv(str2, arg2))
+			if(norm)
 			{
-				perror("execv failed");
-				exit(0);
+		cout << "afadfadf"<< endl;
+				if(-1==execv(str2, arg2))
+				//else if(-1==execv(str2, arg2))
+				{
+					perror("execv failed");
+					exit(0);
+				}
 			}
 		}
-		wait(0);
+		if(-1==wait(0))
+		{
+			perror("waitddd failed");
+			exit(1);
+		}
 		/*
 		if(f)
                 {
