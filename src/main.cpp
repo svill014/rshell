@@ -21,14 +21,14 @@ int main()
 		{
 			perror("getlogin failed");
                         exit(0);
-		}/////////// added perror
+		}
 		else
-			user = getlogin();///////////////////////ask professor
+			user = getlogin();
 		if(gethostname(mech,BUFSIZE)==-1)
 		{
 			perror("gethostname failed");
 			exit(0);
-		}/////////////////////// added perror
+		}
 		
 		cout <<user<<"@"<<mech<< "$ ";
 		delete[] mech;
@@ -38,8 +38,9 @@ int main()
 		{
 			perror("getline failed");
 			exit(0);
-		}////////////////////////////////////// added perror
+		}
 		string com="";
+		string com2="";
 		string arg="";
 
 		bool skip1=false;
@@ -47,7 +48,6 @@ int main()
 
 		for(unsigned i=0; i<inpt.size();i++)
 		{
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			if(inpt[i]=='#')
 			{
 				i=inpt.size();
@@ -167,10 +167,10 @@ int main()
 		str = str + com;
 		const char* str2 =str.c_str();
 		////////////////////////////////////////////
-		cout << str2 << endl;
-		cout << "input: "<< inpt << endl;
-		cout << "commandName: "<<com<<endl;
-		cout << "argumentList: "<<arg<<endl;
+	//	cout << str2 << endl;
+	//	cout << "input: "<< inpt << endl;
+	//	cout << "commandName: "<<com<<endl;
+	//	cout << "argumentList: "<<arg<<endl;
 		////////////////////////////////////////////
 		string temp="";
 		char ** arg2;
@@ -178,7 +178,7 @@ int main()
 		int num=0;
 		string  word="";
 		arg2[0]=new char[str.size()+1];
-		strcpy(arg2[num], str.c_str() );///////////////////////////////////////////////////////////////////////////////
+		strcpy(arg2[num], str.c_str() );
 
 		unsigned i=0;
 		for(i=0; i<=arg.size(); i++)
@@ -186,7 +186,7 @@ int main()
 			if(arg[i]=='#')
 			{
 				
-				strcpy(arg2[num+1], word.c_str() );//////////////////////////////////////////////////////////////////////////////////
+				strcpy(arg2[num+1], word.c_str() );
 				num++;
 				word="";
 				i=arg.size();
@@ -195,17 +195,18 @@ int main()
 			{
 				word=word+arg[i];
 				arg2[num+1]=new char[word.size()+1];
-				strcpy(arg2[num+1], word.c_str() );////////////////////////////////////////////////////////////
+				strcpy(arg2[num+1], word.c_str() );
 				num++;
 				word="";
 			}
-			else if(isspace(arg[i]))/////////////////////////////////////////////////////////////////
+			else if(isspace(arg[i]))
 			{
 				if(i!=0)
 				{
 					if(!isspace(arg[i-1]))
 					{
-					arg2[num+1]=new char[word.size()+1];						strcpy(arg2[num+1], word.c_str() );////////////////////////////////////////////////////////////
+					arg2[num+1]=new char[word.size()+1];
+					strcpy(arg2[num+1], word.c_str() );
 						num++;
 						word="";
 					}
@@ -232,31 +233,31 @@ int main()
 			
 		}
 		//////////////////////////////////////////////////////////
-		for(int j=1; j<=num; j++)
-		{
-			cout <<"::::" <<arg2[j]<<":::" << endl;
-		}
-		cout << endl;
+	//	for(int j=1; j<=num; j++)
+	//	{
+	//		cout <<"::::" <<arg2[j]<<":::" << endl;
+	//	}
+	//	cout << endl;
 		///////////////////////////////////////////////////////////
 		
 		vector<int> v;
 		int cnt = 0;
 		
 		char ** arg3;
-	        arg3 = new char*[BUFSIZE];//////////del this at the end
+	        arg3 = new char*[BUFSIZE];
 		char ** arg4;
-                arg4 = new char*[BUFSIZE];//////////del this at the end
+                arg4 = new char*[BUFSIZE];
 		
 
 
 		int pfd[2];
-
-		cout << endl << cnt << ":"<<num << endl;
+		string str3="/bin/";
+		//cout << endl << cnt << ":"<<num << endl;
 		//while(cnt<=num)
 		//{
-			cout << "::" << cnt << "::" << arg2[cnt] <<"::"<< num<< endl;
 			int res=fork();
 			string st="";
+			bool  st2=false;
 			if(res==-1)
 			{
 				perror("fork failed");
@@ -265,17 +266,18 @@ int main()
 			v.push_back(res);
 			if(res==0)
 			{
-				for(int j=1; j< num; j++)
-				{
-					st=arg2[j];
+			//	for(int j=1; j< num; j++)
+			//	{
+			//		st=arg2[j];
+					if(num>1)//
+						st=arg2[1];//
 					if(st=="|")
 					{
-						if(-1==pipe(pfd) )
-						{
-							perror("pipe failed");
-							exit(1);
-						}
-						int pid1 = fork();
+						//com2=arg2[j+1];
+						com2=arg2[2];
+						st2=true;
+						pipe(pfd);
+						int pid1=fork();
 						if(pid1==-1)
 						{
 							perror("fork failed");
@@ -283,55 +285,32 @@ int main()
 						}
 						if(pid1==0)
 						{
-
-							if(close(1)==-1)
-							{
-								perror("close failed");
-								exit(1);
-							}
-							int fd2 = dup(pfd[1]);
-							if(fd2==-1)
-							{
-								perror("dup failed");
-								exit(1);
-							}
-							for(int k=0; k<j; k++)
+							close(1);/////////////////////////////error check this
+							dup(pfd[1]);
+							for(int k=0; k<num-2; k++)
 							{
 								arg3[k]=arg2[k];
 							}
-							string str3="/bin/";
-							char* com2= arg2[j+1];
-							str3=str3+com2;
-							const char* str4 =str3.c_str();
-							int m=1;
-							arg4[0]=str4;
-							for(int k=j+2; k<=num; k++)
-							{
-								arg4[m]=arg2[k];
-								m++;
-							}
-							if(-1==execv(str2, arg3))
-							{
-								perror("execv failed");
-								exit(0);
-							}
-
-							j=num;
+							execv(str2, arg3);
+							//execlp("ls", "ls", NULL);
+							//abort();
 						}
 						else
-						{/////////perror this part
-							int pid2=fork();
-							if(pid2==0)
-							if(-1==wait(0))
-							{
-								perror("wait failed");
-								exit(1);
-							}
-
+						{
+							close(0);
+							dup(pfd[0]);
+							string s1=arg2[num-1];
+							s1="/bin/" + s1;
+							
+							char* s2;// =s1.c_str();
+							strcpy(s2, s1.c_str() );
+							arg4[0]=s2;
+							arg4[1]=arg2[num];
+							execv(s2, arg4);
+							//abort();//////////////////////////////program freezes, this only works for ls | grep i
 						}
-
+						wait(0);
 					}
-				}
 				if(num>1)
 				{
 					st=arg2[1];
@@ -355,10 +334,6 @@ int main()
                                                 perror("dup failed");
                                                 exit(1);
                                         }
-					//arg2[1]="";
-					//arg3[1]="";
-					//arg2[2]="";
-					//arg3[2]="";
 				}
 				
 				if(num>cnt)
@@ -422,12 +397,14 @@ int main()
 				}
 				else
 				{
-					for(int m=0;m<=num; m++)
-                                        {
-                                                arg3[m]=arg2[m];
-                                        }
+					if(!st2)
+						for(int m=0;m<=num; m++)
+                                        	{
+                                                	arg3[m]=arg2[m];
+	                                        }
 				}
 			//	}
+				cerr <<"\nThis is the end\n\n";
 				if(-1==execv(str2, arg3))
 				{
 					perror("execv failed");
@@ -445,281 +422,24 @@ int main()
 				}
 			}
 			cnt++;
-		//}
-//			if(-1==wait(0))
-//			{
-//				perror("wait failed");
-//				exit(1);
-//			}
-/////////////////////////
-			/*if(( (cnt==(num-1)) )&&(arg2[num-1]==">") )
-			{
-				cout << "pasta" << endl;
-				cout << arg2[cnt];
-				if(arg2[cnt] == ">")
-				{
-					cout << "power" << endl;
-/////////////////////////////////////////
-					int fd = open(arg2[cnt+1], O_RDWR|O_CREAT);
-					if(fd==-1)
-					{
-						perror("open failed");
-						exit(1);
-					}
-					if(-1==ftruncate(fd, 1) )
-					{
-						perror("ftruncate failed");
-						exit(1);
-					}
-					if(close(1)==-1)
-					{
-						perror("close failed");
-						exit(1);
-					}
-					int fd2=dup(fd);
-					if(fd2==-1)
-					{
-						perror("dup failed");
-						exit(1);
-					}
-				}
-			}*/
-	//		cnt++;
-	//	}
-	//	waitpid(v.at(0));
-
-
-
-	
-/*
-		int res=fork();
-		if(res==-1)
-		{
-			perror("fork failed");
-			exit(1);
-		}
-		if(res==0)
-		{
-			///////////////////////////////////////
-			
-			
-			///////////////////////////////
-			
-	//		if(f)
-	//		{
-	//			int res2=fork();
-	//			if(res2==0)
-	//			{
-	//				cout << arg2[1]<<endl;
-	//				if(arg2[2][0]=='>')
-	//					cout << "found it\n";
-	//				if(-1==execv(str2, arg2))
-	//				{
-	//					perror("execv failed");
-	//					exit(0);
-	//				}
-//
-//				}
-//				ext=true;
-//			}
-
-			/////
-			char ** arg3;
-	                arg3 = new char*[BUFSIZE];
-			/////
-			
-
-
-			bool norm = true;
-			for(unsigned j=1; j<num; j++)
-			{
-				cout << "NNNNNNNNNNNNNNNNN" << endl;
-				cout << arg2[j] << endl;
-				string st = arg2[j];
-				
-				if(st=="<")
-				{
-					//norm=false;
-					cout << "< < < < < < < < "<<endl;
-					if(close(0)==-1)
-					{
-						perror("close failed");
-						exit(1);
-                                        }
-					int fd = open(arg2[j+1], O_RDONLY|O_CREAT);
-					if(fd==-1)
-					{
-						perror("open failed");
-						exit(1);
-					}
-/////////////////////////////////////////////////
-					int fd2=dup(fd);
-					if(fd2==-1)
-					{
-						perror("dup failed");
-						exit(1);
-					}
-					unsigned l=0;
-					unsigned m=0;
-					for(;m<j; m++, l++)
-					{
-						arg3[m]=arg2[m];
-					}
-					m=j+2;
-					for(;m<=num;m++, l++)
-					{
-						arg3[l]=arg2[m];
-					}
-			//		if(-1==execv(str2,arg3))
-			//		{
-			//			perror("execv failed");
-			//			exit(1);
-			//		}
-					arg2=arg3;
-					j=1;
-			//		arg2[j]="";
-			//		arg2[j+1]="";
-					cout << num << endl;
-					num=num-2;
-					cout << num << endl;
-/////////////////////////////////////////////////
-				}
-				st=arg2[j];
-				cout << "dfdfdfdf"<< endl<< st << endl;
-				if(st==">")
-				{
-					norm=false;
-					cout << "LLLLLLLLLLLLLLLLLLLLLL"<<endl;
-					int res2=fork();
-					if(res2==-1)
-					{
-						perror("fork failed");
-						exit(1);
-					}
-					if(res==0)
-					{
-						int fd = open(arg2[j+1], O_RDWR|O_CREAT);
-						if(fd==-1)
-						{
-							perror("open failed");
-							exit(1);
-						}
-						if(-1==ftruncate(fd, 1) )
-						{
-							perror("ftruncate failed");
-							exit(1);
-						}
-						
-			//			if(-1==write(fd,"",1))
-			//			{
-			//				perror("write failed");
-			//				exit(1);
-			//			}
-						if(close(1)==-1)
-						{
-							perror("close failed");
-							exit(1);
-						}
-						int fd2=dup(fd);
-						if(fd2==-1)
-                                                {
-                                                        perror("dup failed");
-                                                        exit(1);
-                                                }
-						for(unsigned k=0;k<j; k++)
-						{
-							arg3[k]=arg2[k];
-						}
-						if(-1==execv(str2,arg3))
-						//does not work with <
-						{
-							perror("execv failed");
-							exit(1);
-						}
-					}
-					if(-1==wait(0))
-					{
-						perror("wait failed");
-						exit(1);
-					}
-				}
-			////////////////////////	
-				else if(st==">>")//does it twice
-				{
-					cout << "TTTTTTTT" << endl;
-					norm=false;
-					cout << ">> >> >> >> >> >>"<<endl;
-					int res2=fork();
-					if(res2==-1)
-					{
-						perror("fork failed");
-						exit(1);
-					}
-					if(res2==0)
-					{
-						int fd = open(arg2[j+1], O_RDWR|O_CREAT|O_APPEND);
-						if(fd==-1)
-						{
-							perror("open failed");
-							exit(1);
-						}
-						if(close(1)==-1)
-						{
-							perror("close failed");
-							exit(1);
-						}
-						int fd2=dup(fd);
-						if(fd2==-1)
-                                                {
-                                                        perror("dup failed");
-                                                        exit(1);
-                                                }
-						for(unsigned k=0;k<j; k++)
-						{
-							arg3[k]=arg2[k];
-						}
-						if(-1==execv(str2,arg3))
-						{
-							perror("execv failed");
-							exit(1);
-						}
-					}
-					if(-1==wait(0))
-					{
-						perror("wait failed");
-						exit(1);
-					}
-					exit(0);
-				}
-			}
-			if(norm)
-			{
-		cout << "afadfadf"<< endl;
-				if(-1==execv(str2, arg2))
-				//else if(-1==execv(str2, arg2))
-				{
-					perror("execv failed");
-					exit(0);
-				}
-			}
-		}
-		if(-1==wait(0))
-		{
-			perror("waitddd failed");
-			exit(1);
-		}
-		
-	//	if(f)
-         //       {
-         //               wait(0);
-         //       }
-*/
 		for(int i=0; i<BUFSIZE; i++)
 		{
 			if(arg2[i]=="")
 				i=BUFSIZE;
 			delete arg2[i];
 		}
+	/*	for(int i=0; i<BUFSIZE; i++)
+		{
+			if(arg3[i]=="")
+				i=BUFSIZE;
+			delete arg3[i];
+		}
+		for(int i=0; i<BUFSIZE; i++)
+		{
+			if(arg4[i]=="")
+				i=BUFSIZE;
+			delete arg4[i];
+		}*/
 		if(ext==true)
 			exit(0);
 	}
