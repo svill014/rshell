@@ -243,24 +243,95 @@ int main()
 		int cnt = 0;
 		
 		char ** arg3;
-	        arg3 = new char*[BUFSIZE];
+	        arg3 = new char*[BUFSIZE];//////////del this at the end
+		char ** arg4;
+                arg4 = new char*[BUFSIZE];//////////del this at the end
+		
 
+
+		int pfd[2];
 
 		cout << endl << cnt << ":"<<num << endl;
 		//while(cnt<=num)
 		//{
 			cout << "::" << cnt << "::" << arg2[cnt] <<"::"<< num<< endl;
 			int res=fork();
-			v.push_back(res);
 			string st="";
 			if(res==-1)
 			{
 				perror("fork failed");
 				exit(1);
 			}
+			v.push_back(res);
 			if(res==0)
 			{
-				cout << arg2[1]<< "TTTTTTTTTTTTTT\n";
+				for(int j=1; j< num; j++)
+				{
+					st=arg2[j];
+					if(st=="|")
+					{
+						if(-1==pipe(pfd) )
+						{
+							perror("pipe failed");
+							exit(1);
+						}
+						int pid1 = fork();
+						if(pid1==-1)
+						{
+							perror("fork failed");
+							exit(1);
+						}
+						if(pid1==0)
+						{
+
+							if(close(1)==-1)
+							{
+								perror("close failed");
+								exit(1);
+							}
+							int fd2 = dup(pfd[1]);
+							if(fd2==-1)
+							{
+								perror("dup failed");
+								exit(1);
+							}
+							for(int k=0; k<j; k++)
+							{
+								arg3[k]=arg2[k];
+							}
+							string str3="/bin/";
+							char* com2= arg2[j+1];
+							str3=str3+com2;
+							const char* str4 =str3.c_str();
+							int m=1;
+							arg4[0]=str4;
+							for(int k=j+2; k<=num; k++)
+							{
+								arg4[m]=arg2[k];
+								m++;
+							}
+							if(-1==execv(str2, arg3))
+							{
+								perror("execv failed");
+								exit(0);
+							}
+
+							j=num;
+						}
+						else
+						{/////////perror this part
+							int pid2=fork();
+							if(pid2==0)
+							if(-1==wait(0))
+							{
+								perror("wait failed");
+								exit(1);
+							}
+
+						}
+
+					}
+				}
 				if(num>1)
 				{
 					st=arg2[1];
@@ -284,10 +355,10 @@ int main()
                                                 perror("dup failed");
                                                 exit(1);
                                         }
-					arg2[1]="";
-					arg3[1]="";
-					arg2[2]="";
-					arg3[2]="";
+					//arg2[1]="";
+					//arg3[1]="";
+					//arg2[2]="";
+					//arg3[2]="";
 				}
 				
 				if(num>cnt)
@@ -297,7 +368,7 @@ int main()
 				if(st== ">")
 				{
 					int fd = open(arg2[num], O_WRONLY|O_CREAT);
-					//bug, any new file will have only read permission
+					//bug, any new file will have no permissions
 					if(fd==-1)
 					{
 						perror("open failed");
