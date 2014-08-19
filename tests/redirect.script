@@ -1,0 +1,137 @@
+Script started on Tue 19 Aug 2014 01:41:18 PM PDT
+~
+svill014@well $ cd cs100/rshell
+~/cs100/rshell
+svill014@well $ ls
+[0m[0mLICENSE[0m  [0mMakefile[0m  [0mREADME.md[0m  [01;34msrc[0m/  [01;34mtests[0m/
+[m~/cs100/rshell
+svill014@well $ touch a
+~/cs100/rshell
+svill014@well $ touch b
+~/cs100/rshell
+svill014@well $ make
+echo "updating/making bin folder"
+updating/making bin folder
+[ ! -d bin ] && mkdir bin
+echo "building rshell"
+building rshell
+g++ -Wall -Werror -ansi -pedantic src/main.cpp -o bin/rshell
+echo "building ls"
+building ls
+g++ -Wall -Werror -ansi -pedantic src/ls.cpp -o bin/ls
+~/cs100/rshell
+svill014@well $ bin/rshell
+svill014@well.cs.ucr.edu$ ls
+a  b  bin  LICENSE  Makefile  README.md  src  tests
+svill014@well.cs.ucr.edu$ cat a
+svill014@well.cs.ucr.edu$ ls > a
+svill014@well.cs.ucr.edu$ cat a
+a
+b
+bin
+LICENSE
+Makefile
+README.md
+src
+tests
+svill014@well.cs.ucr.edu$ echo Hello World > a
+svill014@well.cs.ucr.edu$ cat a
+Hello World
+svill014@well.cs.ucr.edu$ cat b
+svill014@well.cs.ucr.edu$ echo This is a test > b
+svill014@well.cs.ucr.edu$ cat b
+This is a test
+svill014@well.cs.ucr.edu$ cat a >> b
+svill014@well.cs.ucr.edu$ cat b
+This is a test
+Hello World
+svill014@well.cs.ucr.edu$ cat b > c
+svill014@well.cs.ucr.edu$ ls -l
+total 28
+-rw------- 1 svill014 classes   12 Aug 19 13:42 a
+-rw------- 1 svill014 classes   27 Aug 19 13:42 b
+drwx------ 2 svill014 classes 4096 Aug 19 13:41 bin
+---------- 1 svill014 classes   27 Aug 19 13:42 c
+-rw------- 1 svill014 classes  779 Aug 10 22:58 LICENSE
+-rw------- 1 svill014 classes  389 Aug 19 13:07 Makefile
+-rw------- 1 svill014 classes 4385 Aug 19 13:14 README.md
+drwx------ 2 svill014 classes 4096 Aug 19 13:33 src
+drwx------ 2 svill014 classes 4096 Aug 19 13:41 tests
+svill014@well.cs.ucr.edu$ grep H < b
+grep: <: No such file or directory
+b:Hello World
+svill014@well.cs.ucr.edu$ grep e < b
+grep: <: No such file or directory
+b:This is a test
+b:Hello World
+svill014@well.cs.ucr.edu$ grep e < b >> a
+grep: <: No such file or directory
+svill014@well.cs.ucr.edu$ cat a
+Hello World
+b:This is a test
+b:Hello World
+svill014@well.cs.ucr.edu$ grep i < b > a
+grep: <: No such file or directory
+svill014@well.cs.ucr.edu$ cat a
+b:This is a test
+svill014@well.cs.ucr.edu$ cat < b > a
+/bin/cat: <: No such file or directory
+svill014@well.cs.ucr.edu$ cat a
+This is a test
+Hello World
+svill014@well.cs.ucr.edu$ cat b < b >> a
+/bin/cat: <: No such file or directory
+svill014@well.cs.ucr.edu$ cat a
+This is a test
+Hello World
+This is a test
+Hello World
+svill014@well.cs.ucr.edu$ cat < a > d
+/bin/cat: <: No such file or directory
+svill014@well.cs.ucr.edu$ ls -l
+total 28
+-rw------- 1 svill014 classes   54 Aug 19 13:44 a
+-rw------- 1 svill014 classes   27 Aug 19 13:42 b
+drwx------ 2 svill014 classes 4096 Aug 19 13:41 bin
+---------- 1 svill014 classes   27 Aug 19 13:42 c
+---------- 1 svill014 classes   54 Aug 19 13:45 d
+-rw------- 1 svill014 classes  779 Aug 10 22:58 LICENSE
+-rw------- 1 svill014 classes  389 Aug 19 13:07 Makefile
+-rw------- 1 svill014 classes 4385 Aug 19 13:14 README.md
+drwx------ 2 svill014 classes 4096 Aug 19 13:33 src
+drwx------ 2 svill014 classes 4096 Aug 19 13:41 tests
+svill014@well.cs.ucr.edu$ ls | grep E
+LICENSE
+README.md
+
+[1]+  Stopped                 bin/rshell
+~/cs100/rshell
+svill014@well $ fg
+bin/rshell
+svill014@well.cs.ucr.edu$ ls
+a  b  bin  c  d  LICENSE  Makefile  README.md  src  tests
+svill014@well.cs.ucr.edu$ pwd | grep a
+/class/classes/svill014/cs100/rshell
+
+[1]+  Stopped                 bin/rshell
+~/cs100/rshell
+svill014@well $ fg
+bin/rshell
+svill014@well.cs.ucr.edu$ pwd | grep Q
+
+[1]+  Stopped                 bin/rshell
+~/cs100/rshell
+svill014@well $ fg
+bin/rshell
+svill014@well.cs.ucr.edu$ ls | grep Q
+
+[1]+  Stopped                 bin/rshell
+~/cs100/rshell
+svill014@well $ fg
+bin/rshell
+svill014@well.cs.ucr.edu$ exit
+~/cs100/rshell
+svill014@well $ exit
+exit
+
+Script done on Tue 19 Aug 2014 01:47:43 PM PDT

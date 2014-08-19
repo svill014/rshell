@@ -303,7 +303,6 @@ int main()
 							{
 								arg3[k]=arg2[k];
 							}
-							cerr << "TEstqqqq\n\n";
 							if (-1==execv(str2, arg3))
 							{
                         			                perror("execv failed");
@@ -437,7 +436,7 @@ int main()
 	                                        }
 				}
 			//	}
-				cerr <<"\nThis is the end\n\n";
+			//	cerr <<"\nThis is the end\n\n";
 				if(-1==execv(str2, arg3))
 				{
 					perror("execv failed");
