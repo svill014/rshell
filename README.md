@@ -7,13 +7,20 @@ If exit is called, then the program will end. This works no matter what is after
 
 After you are in the directory rshell, the following steps can start the program.
 Type [make]
-	This will make an executable file named rshell in the folder bin.
+	This will make an executable file named rshell in the folder bin and the executable ls in the same folder.
 type [bin/rshell]
-	This will start the program.
+	This will start the first program.
+type[bin/ls]
+	This will start the second program
 
 The user can tell that the program has started running if [username]@[hostname]$ can be seen. (username and hostname will be different depending on the user)
 
+
 This program has a few bugs within it. The program will not be able to handle any input that normally has the '&' in it or be able to use any files with that character. The program will not understand the input if the & and the word before it has whitespace between them. The & will only work if it is in the argumentList and not the commandName. The program will not understand what to do with a file if it has spaces in it. The program will not understand the input if it has more than one whitespace at the end of it.
+
+update to rshell.cpp
+=====
+rshell has been updated to include input redirection, output redirection, and piping.  Input redirection can be done by typing: [commandName] [argumentList] ">" [fileName]. fileName is the file you want to send the info to. This will replace any information in the file with the new text. By using ">>" instead of ">", the program will append the information instead of replacig it. There is a bug that makes any new files made using this method will have no permissions. Output redirection can be done by typing: [commandName] [argumentList] "<" [filename]. This will take the text in filename as the input for the program. Input redirection makes a file called '<' which has no permissions. This does not let me call input redirection again. Removing this file somes the problem, but it may output"<: No such file or directory". Input and output redirection can be combined with the following format: [commandName] [argumentList] "<" [fileNameIn] ">" [fileNameOut]. Piping only works with the format: [command1] [nothing] "|" [command2] [one argument here]. There is a bug with piping but typing in a few commands will solve it. Normally, it will freeze the program. This can be fixed with two commands. Typing in cntrl-z will exit the program. Typing fg will make the program run correctly again.
 
 ls.cpp
 =====
@@ -42,4 +49,4 @@ Makefile contains the code that allows the command [make] to create an executabl
 
 bin
 ======
-bin starts as an empty folder(exept for the file test which exists so this folder can exist) but obtains an executable once the user inputs the command [make]
+bin is a folder that is made if it does not already exist. It contains any executables that these programs may use once the user inputs the command [make]
