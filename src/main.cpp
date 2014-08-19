@@ -273,10 +273,13 @@ int main()
 						st=arg2[1];//
 					if(st=="|")
 					{
-						//com2=arg2[j+1];
 						com2=arg2[2];
 						st2=true;
-						pipe(pfd);
+						if(-1==pipe(pfd))
+						{
+							perror("pipe failed");
+							exit(1);
+						}
 						int pid1=fork();
 						if(pid1==-1)
 						{
@@ -285,32 +288,58 @@ int main()
 						}
 						if(pid1==0)
 						{
-							close(1);/////////////////////////////error check this
-							dup(pfd[1]);
+							if(close(1)==-1)
+                		                        {
+		                                                perror("close failed");
+                                                		exit(1);
+		                                        }
+							int fd3 =dup(pfd[1]);
+							if(fd3==-1)
+                                		        {
+                		                                perror("dup failed");
+		                                                exit(1);
+                                        		}
 							for(int k=0; k<num-2; k++)
 							{
 								arg3[k]=arg2[k];
 							}
-							execv(str2, arg3);
-							//execlp("ls", "ls", NULL);
-							//abort();
+							cerr << "TEstqqqq\n\n";
+							if (-1==execv(str2, arg3))
+							{
+                        			                perror("execv failed");
+			                                        exit(0);
+			                                }
 						}
 						else
 						{
-							close(0);
-							dup(pfd[0]);
+							if (close(0)==-1)
+							{
+								perror("close failed");
+								exit(1);
+							}
+							int fd3 = dup(pfd[0]);
+							if(fd3==-1)
+                                                        {
+                                                                perror("dup failed");
+                                                                exit(1);
+                                                        }
 							string s1=arg2[num-1];
 							s1="/bin/" + s1;
 							
-							char* s2;// =s1.c_str();
+							char* s2;
 							strcpy(s2, s1.c_str() );
 							arg4[0]=s2;
 							arg4[1]=arg2[num];
-							execv(s2, arg4);
-							//abort();//////////////////////////////program freezes, this only works for ls | grep i
+							if(-1==execv(s2, arg4))
+							{
+                                                                perror("execv failed");
+                                                                exit(1);
+                                                        }
+							//program freezes but will work if the user types cntrl z and then fg, This only works for the format [command] [nothing] | [command] [one argument here]
 						}
 						wait(0);
 					}
+					wait(0);
 				if(num>1)
 				{
 					st=arg2[1];
@@ -322,6 +351,10 @@ int main()
 					{
 						perror("open failed");
 						exit(1);
+					}
+					if(remove("<")!=0) //bug, input redirection makes a file called '<' which has no permissions. This does not let me call input redirection again. Removing this file somes the problem, but it may output"<: No such file or directory"
+					{
+						perror("remove failed");
 					}
 					if(close(0)==-1)
                                         {
