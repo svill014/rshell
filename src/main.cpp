@@ -5,6 +5,7 @@
 #define BUFSIZE 1024
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <vector>
 using namespace std;
     
 bool ext=false;
@@ -231,12 +232,195 @@ int main()
 			
 		}
 		//////////////////////////////////////////////////////////
-		for(unsigned j=1; j<=num; j++)
+		for(int j=1; j<=num; j++)
 		{
 			cout <<"::::" <<arg2[j]<<":::" << endl;
 		}
 		cout << endl;
 		///////////////////////////////////////////////////////////
+		
+		vector<int> v;
+		int cnt = 0;
+		
+		char ** arg3;
+	        arg3 = new char*[BUFSIZE];
+
+
+		cout << endl << cnt << ":"<<num << endl;
+		//while(cnt<=num)
+		//{
+			cout << "::" << cnt << "::" << arg2[cnt] <<"::"<< num<< endl;
+			int res=fork();
+			v.push_back(res);
+			string st="";
+			if(res==-1)
+			{
+				perror("fork failed");
+				exit(1);
+			}
+			if(res==0)
+			{
+				cout << arg2[1]<< "TTTTTTTTTTTTTT\n";
+				if(num>1)
+				{
+					st=arg2[1];
+				}
+				if(st== "<")
+				{
+					int fd = open(arg2[1], O_RDONLY|O_CREAT);
+					if(fd==-1)
+					{
+						perror("open failed");
+						exit(1);
+					}
+					if(close(0)==-1)
+                                        {
+                                                perror("close failed");
+                                                exit(1);
+                                        }
+                                        int fd2=dup(fd);
+                                        if(fd2==-1)
+                                        {
+                                                perror("dup failed");
+                                                exit(1);
+                                        }
+					arg2[1]="";
+					arg3[1]="";
+					arg2[2]="";
+					arg3[2]="";
+				}
+				
+				if(num>cnt)
+					st=arg2[num-1];
+			//	if(cnt==(num-1) )
+			//	{
+				if(st== ">")
+				{
+					int fd = open(arg2[num], O_WRONLY|O_CREAT);
+					//bug, any new file will have only read permission
+					if(fd==-1)
+					{
+						perror("open failed");
+						exit(1);
+					}
+					if(-1==ftruncate(fd, 1) )
+					{
+						perror("ftruncate failed");
+						exit(1);
+					}
+					if(close(1)==-1)
+					{
+						perror("close failed");
+						exit(1);
+					}
+					int fd2=dup(fd);
+					if(fd2==-1)
+					{
+						perror("dup failed");
+						exit(1);
+					}
+					for(int k=0;k<num-1; k++)
+					{
+						arg3[k]=arg2[k];
+					}
+				}
+				else if(st==">>")
+				{
+					int fd = open(arg2[num], O_WRONLY|O_CREAT|O_APPEND);
+					//bug, any new file will not have any permission
+					if(fd==-1)
+					{
+						perror("open failed");
+						exit(1);
+					}
+					if(close(1)==-1)
+					{
+						perror("close failed");
+						exit(1);
+					}
+					int fd2=dup(fd);
+					if(fd2==-1)
+					{
+						perror("dup failed");
+						exit(1);
+					}
+					for(int k=0;k<num-1; k++)
+					{
+						arg3[k]=arg2[k];
+					}
+				}
+				else
+				{
+					for(int m=0;m<=num; m++)
+                                        {
+                                                arg3[m]=arg2[m];
+                                        }
+				}
+			//	}
+				if(-1==execv(str2, arg3))
+				{
+					perror("execv failed");
+					exit(0);
+				}
+			}
+			else
+			{
+				//if(v.size()==1)
+			//		cnt=num;
+				if(-1==waitpid(v.at(0),0,WUNTRACED | WCONTINUED) )
+				{
+					perror("waitpid failed");
+					exit(1);
+				}
+			}
+			cnt++;
+		//}
+//			if(-1==wait(0))
+//			{
+//				perror("wait failed");
+//				exit(1);
+//			}
+/////////////////////////
+			/*if(( (cnt==(num-1)) )&&(arg2[num-1]==">") )
+			{
+				cout << "pasta" << endl;
+				cout << arg2[cnt];
+				if(arg2[cnt] == ">")
+				{
+					cout << "power" << endl;
+/////////////////////////////////////////
+					int fd = open(arg2[cnt+1], O_RDWR|O_CREAT);
+					if(fd==-1)
+					{
+						perror("open failed");
+						exit(1);
+					}
+					if(-1==ftruncate(fd, 1) )
+					{
+						perror("ftruncate failed");
+						exit(1);
+					}
+					if(close(1)==-1)
+					{
+						perror("close failed");
+						exit(1);
+					}
+					int fd2=dup(fd);
+					if(fd2==-1)
+					{
+						perror("dup failed");
+						exit(1);
+					}
+				}
+			}*/
+	//		cnt++;
+	//	}
+	//	waitpid(v.at(0));
+
+
+
+	
+/*
 		int res=fork();
 		if(res==-1)
 		{
@@ -249,29 +433,31 @@ int main()
 			
 			
 			///////////////////////////////
-			/*
-			if(f)
-			{
-				int res2=fork();
-				if(res2==0)
-				{
-					cout << arg2[1]<<endl;
-					if(arg2[2][0]=='>')
-						cout << "found it\n";
-					if(-1==execv(str2, arg2))
-					{
-						perror("execv failed");
-						exit(0);
-					}
-
-				}
-				ext=true;
-			}*/
+			
+	//		if(f)
+	//		{
+	//			int res2=fork();
+	//			if(res2==0)
+	//			{
+	//				cout << arg2[1]<<endl;
+	//				if(arg2[2][0]=='>')
+	//					cout << "found it\n";
+	//				if(-1==execv(str2, arg2))
+	//				{
+	//					perror("execv failed");
+	//					exit(0);
+	//				}
+//
+//				}
+//				ext=true;
+//			}
 
 			/////
 			char ** arg3;
 	                arg3 = new char*[BUFSIZE];
 			/////
+			
+
 
 			bool norm = true;
 			for(unsigned j=1; j<num; j++)
@@ -279,7 +465,57 @@ int main()
 				cout << "NNNNNNNNNNNNNNNNN" << endl;
 				cout << arg2[j] << endl;
 				string st = arg2[j];
-				if(st==">")//replaces chars from the old file
+				
+				if(st=="<")
+				{
+					//norm=false;
+					cout << "< < < < < < < < "<<endl;
+					if(close(0)==-1)
+					{
+						perror("close failed");
+						exit(1);
+                                        }
+					int fd = open(arg2[j+1], O_RDONLY|O_CREAT);
+					if(fd==-1)
+					{
+						perror("open failed");
+						exit(1);
+					}
+/////////////////////////////////////////////////
+					int fd2=dup(fd);
+					if(fd2==-1)
+					{
+						perror("dup failed");
+						exit(1);
+					}
+					unsigned l=0;
+					unsigned m=0;
+					for(;m<j; m++, l++)
+					{
+						arg3[m]=arg2[m];
+					}
+					m=j+2;
+					for(;m<=num;m++, l++)
+					{
+						arg3[l]=arg2[m];
+					}
+			//		if(-1==execv(str2,arg3))
+			//		{
+			//			perror("execv failed");
+			//			exit(1);
+			//		}
+					arg2=arg3;
+					j=1;
+			//		arg2[j]="";
+			//		arg2[j+1]="";
+					cout << num << endl;
+					num=num-2;
+					cout << num << endl;
+/////////////////////////////////////////////////
+				}
+				st=arg2[j];
+				cout << "dfdfdfdf"<< endl<< st << endl;
+				if(st==">")
 				{
 					norm=false;
 					cout << "LLLLLLLLLLLLLLLLLLLLLL"<<endl;
@@ -302,12 +538,12 @@ int main()
 							perror("ftruncate failed");
 							exit(1);
 						}
-						/*
-						if(-1==write(fd,"",1))
-						{
-							perror("write failed");
-							exit(1);
-						}*/
+						
+			//			if(-1==write(fd,"",1))
+			//			{
+			//				perror("write failed");
+			//				exit(1);
+			//			}
 						if(close(1)==-1)
 						{
 							perror("close failed");
@@ -324,6 +560,7 @@ int main()
 							arg3[k]=arg2[k];
 						}
 						if(-1==execv(str2,arg3))
+						//does not work with <
 						{
 							perror("execv failed");
 							exit(1);
@@ -400,12 +637,12 @@ int main()
 			perror("waitddd failed");
 			exit(1);
 		}
-		/*
-		if(f)
-                {
-                        wait(0);
-                }*/
-
+		
+	//	if(f)
+         //       {
+         //               wait(0);
+         //       }
+*/
 		for(int i=0; i<BUFSIZE; i++)
 		{
 			if(arg2[i]=="")
