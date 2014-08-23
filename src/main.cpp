@@ -6,6 +6,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <vector>
+#include <fstream>
+#include <string>
+
 using namespace std;
     
 bool ext=false;
@@ -163,14 +166,75 @@ int main()
 			s="exit";
 			exit (0);
 		}
-		string str="/bin/";
-		str = str + com;
+		string str="";//"/bin/";
+/////////////////////////////////////////iwanttobehere
+		if(getenv("PATH")==NULL)
+		{
+			perror("getenv failed:");
+			exit(1);
+		}
+		string path1=getenv("PATH");
+		string path2[BUFSIZE];
+//		strcpy(arg2[num], str.c_str() );
+
+		int pathNum=0;
+		for(unsigned i=0; i<path1.size(); i++)
+		{
+			if(path1.at(i)==':')
+                        {
+                                pathNum++;
+                        }
+                        else
+                        {
+                                cerr << path1.at(i) << endl;
+                                path2[pathNum]=path2[pathNum]+path1.at(i);
+                        }
+		}
+		cerr << "DLDLLDLDL" << endl;
+		for(int i=0; i<=pathNum; i++)
+		{
+			cout << path2[i]<< endl;
+		}
+		cerr << "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl << endl;
+		bool inPath=false;
+		string str0="";
+		for(int i=0;(  (i<=pathNum)&&(!inPath) ) ; i++)
+		{
+			str0=path2[i];
+			if(str0.at(str0.size()-1 ) != '/')
+                                str0=str0+'/';
+			str0=str0+com;
+			if(access(str0.c_str(), X_OK) ==0)
+			{
+				cerr << "adfafadfadfadfafafaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\n\n";
+                                inPath=true;
+                                pathNum=i;
+			}
+			else//ask professor about this part
+			{
+			//	perror("command not found");
+			}
+		}
+		if(!inPath)
+		{
+			cerr << str0 << endl << endl;
+		}
+		else
+		{
+			str=str0;
+		}
+		cout << "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << endl << endl;
+/////////////////////////////////////////
+		cerr<< str << endl << endl;
+		if(!inPath)
+			str = str + com;
+		cerr << str << endl << endl;
 		const char* str2 =str.c_str();
 		////////////////////////////////////////////
-	//	cout << str2 << endl;
-	//	cout << "input: "<< inpt << endl;
-	//	cout << "commandName: "<<com<<endl;
-	//	cout << "argumentList: "<<arg<<endl;
+		cout << str2 << endl;
+		cout << "input: "<< inpt << endl;
+		cout << "commandName: "<<com<<endl;
+		cout << "argumentList: "<<arg<<endl;
 		////////////////////////////////////////////
 		string temp="";
 		char ** arg2;
@@ -179,7 +243,7 @@ int main()
 		string  word="";
 		arg2[0]=new char[str.size()+1];
 		strcpy(arg2[num], str.c_str() );
-
+cout << arg2[0] << endl << endl;
 		unsigned i=0;
 		for(i=0; i<=arg.size(); i++)
 		{
@@ -254,7 +318,7 @@ int main()
 		string str3="/bin/";
 		//cout << endl << cnt << ":"<<num << endl;
 		//while(cnt<=num)
-		//{
+		//
 			int res=fork();
 			string st="";
 			bool  st2=false;
@@ -267,7 +331,7 @@ int main()
 			if(res==0)
 			{
 			//	for(int j=1; j< num; j++)
-			//	{
+			//	
 			//		st=arg2[j];
 					if(num>1)//
 						st=arg2[1];//
@@ -436,7 +500,7 @@ int main()
 	                                        }
 				}
 			//	}
-			//	cerr <<"\nThis is the end\n\n";
+				cerr <<"\nThis is the end\n\n";
 				if(-1==execv(str2, arg3))
 				{
 					perror("execv failed");
@@ -454,13 +518,13 @@ int main()
 				}
 			}
 			cnt++;
-		for(int i=0; i<BUFSIZE; i++)
+		/*for(int i=0; i<BUFSIZE; i++)
 		{
 			if(arg2[i]=="")
 				i=BUFSIZE;
 			delete arg2[i];
 		}
-	/*	for(int i=0; i<BUFSIZE; i++)
+		for(int i=0; i<BUFSIZE; i++)
 		{
 			if(arg3[i]=="")
 				i=BUFSIZE;
@@ -472,7 +536,7 @@ int main()
 				i=BUFSIZE;
 			delete arg4[i];
 		}*/
-		if(ext==true)
+		if(ext)
 			exit(0);
 	}
 	return 0;
