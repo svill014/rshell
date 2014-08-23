@@ -166,6 +166,23 @@ int main()
 			s="exit";
 			exit (0);
 		}
+
+/////////////////////////////////////////////////////////////////
+		bool cd =false;
+		if(com=="cd")// does not work for just cd
+		{
+			cd=true;
+			char dir[arg.size()+1];
+			for(int i=0; i<arg.size(); i++)
+			{
+				dir[i]=arg.at(i);
+			}
+			dir[arg.size()] = '\0';
+			if(chdir(dir)==-1)
+			{
+				perror("cannot open:");
+			}
+		}
 		string str="";//"/bin/";
 /////////////////////////////////////////iwanttobehere
 		if(getenv("PATH")==NULL)
@@ -186,7 +203,6 @@ int main()
                         }
                         else
                         {
-                                cerr << path1.at(i) << endl;
                                 path2[pathNum]=path2[pathNum]+path1.at(i);
                         }
 		}
@@ -316,8 +332,6 @@ cout << arg2[0] << endl << endl;
 
 		int pfd[2];
 		string str3="";//"/bin/";
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// iwanttobehere
 		//cout << endl << cnt << ":"<<num << endl;
 		//while(cnt<=num)
 		//
@@ -341,11 +355,6 @@ cout << arg2[0] << endl << endl;
 					{
 						com2=arg2[2];
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////iwanttobehere
 						st2=true;
 						if(-1==pipe(pfd))
 						{
@@ -571,13 +580,14 @@ cout << arg2[0] << endl << endl;
 				}
 			//	}
 				cerr <<"\nThis is the end\n\n";
-				if(-1==execv(str2, arg3))
-				{
-					perror("execv failed");
-					exit(0);
-				}
+					if(-1==execv(str2, arg3))
+					{
+						if(!cd)
+							perror("execv failed");
+						exit(0);
+					}
 			}
-			else
+			else 
 			{
 				//if(v.size()==1)
 			//		cnt=num;
