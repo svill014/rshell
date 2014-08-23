@@ -315,7 +315,9 @@ cout << arg2[0] << endl << endl;
 
 
 		int pfd[2];
-		string str3="/bin/";
+		string str3="";//"/bin/";
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// iwanttobehere
 		//cout << endl << cnt << ":"<<num << endl;
 		//while(cnt<=num)
 		//
@@ -338,6 +340,12 @@ cout << arg2[0] << endl << endl;
 					if(st=="|")
 					{
 						com2=arg2[2];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////iwanttobehere
 						st2=true;
 						if(-1==pipe(pfd))
 						{
@@ -387,10 +395,72 @@ cout << arg2[0] << endl << endl;
                                                                 exit(1);
                                                         }
 							string s1=arg2[num-1];
-							s1="/bin/" + s1;
-							
-							char* s2;
-							strcpy(s2, s1.c_str() );
+							//s1="/bin/" + s1;
+							/////////////////////////////////////////////////////////////////////////////////////
+		if(getenv("PATH")==NULL)
+		{
+			perror("getenv failed:");
+			exit(1);
+		}
+		string path3=getenv("PATH");
+		string path4[BUFSIZE];
+//		strcpy(arg2[num], str.c_str() );
+
+		int pathNum2=0;
+		for(unsigned i=0; i<path3.size(); i++)
+		{
+			if(path3.at(i)==':')
+                        {
+				//cerr << endl;
+                                pathNum2++;
+                        }
+                        else
+                        {
+                                //cerr << path3.at(i) << endl;
+                                path4[pathNum2]=path4[pathNum2]+path3.at(i);
+                        }
+		}
+		/*for(int i=0; i<=pathNum2; i++)
+		{
+			cerr << path4[i]<< endl;
+		}*/
+		cerr << "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl << endl;
+		bool inPath2=false;
+		string str00="";
+		for(int i=0;(  (i<=pathNum2)&&(!inPath2) ) ; i++)
+		{
+			str00=path4[i];
+			if(str00.at(str00.size()-1 ) != '/')
+                                str00=str00+'/';
+			//str00=str00+com;/////////////////////////////////////////////////////////////////////////////
+			str00=str00+s1;
+			if(access(str00.c_str(), X_OK) ==0)
+			{
+				cerr << "adfafadfadfadfafafaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\n\n";
+                                inPath2=true;
+                                pathNum=i;
+			}
+			else//ask professor about this part
+			{
+			//	perror("command not found");
+			}
+		}
+		if(!inPath2)
+		{
+			cerr << str00 << endl << endl;
+		}
+		else
+		{
+			//str3=str00;
+			s1=str00;
+		}
+		cerr << "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << endl << endl;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////iwanttobehere
+							char* s2="";
+							char c[s1.size()+1];
+							s2=c;
+							copy(s1.begin(), s1.end(), c);
+							c[s1.size()] = '\0';
 							arg4[0]=s2;
 							arg4[1]=arg2[num];
 							if(-1==execv(s2, arg4))
