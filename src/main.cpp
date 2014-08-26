@@ -8,13 +8,46 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <stdio.h>
+#include <signal.h>
+
 
 using namespace std;
     
 bool ext=false;
+int res=-1;
+
+
+void pc(int x)
+{
+	if(res==-1)
+	{
+	}
+	else if(res!=0)
+	{
+		kill(res, 0);
+	}
+}
+
+void pz(int x)
+{
+	if(res==-1)
+        {
+        }
+        else if(res!=0)
+        {
+                kill(res, SIGSTOP);
+        }
+       // pid_t pid = getpid();
+	//kill(pid,SIGSTOP);
+}
+
 
 int main()
 {
+	res=-1;
+	signal(SIGINT, pc);
+        signal(SIGTSTP, pz);
 	string s ="";
 	while (s!="exit")
 	{
@@ -172,12 +205,22 @@ int main()
 		if(com=="cd")// does not work for just cd
 		{
 			cd=true;
-			char dir[arg.size()+1];
-			for(int i=0; i<arg.size(); i++)
+			int argSize=arg.size()+1;
+			//char dir[argSize];
+			char dir[BUFSIZE];
+			dir[argSize]='\0';
+			for(unsigned i=0; i<arg.size(); i++)
 			{
 				dir[i]=arg.at(i);
 			}
 			dir[arg.size()] = '\0';
+			if (arg.size()==0)
+			{
+				if(chdir(getenv("HOME"))==-1)
+                        	{
+                                	perror("cannot open:");
+				}
+			}
 			if(chdir(dir)==-1)
 			{
 				perror("cannot open:");
@@ -206,12 +249,6 @@ int main()
                                 path2[pathNum]=path2[pathNum]+path1.at(i);
                         }
 		}
-		cerr << "DLDLLDLDL" << endl;
-		for(int i=0; i<=pathNum; i++)
-		{
-			cout << path2[i]<< endl;
-		}
-		cerr << "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl << endl;
 		bool inPath=false;
 		string str0="";
 		for(int i=0;(  (i<=pathNum)&&(!inPath) ) ; i++)
@@ -222,36 +259,31 @@ int main()
 			str0=str0+com;
 			if(access(str0.c_str(), X_OK) ==0)
 			{
-				cerr << "adfafadfadfadfafafaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\n\n";
                                 inPath=true;
                                 pathNum=i;
 			}
-			else//ask professor about this part
+			else if ((i==pathNum)&&(inPath))//ask professor about this part
 			{
-			//	perror("command not found");
+				perror("command not found");
 			}
 		}
 		if(!inPath)
 		{
-			cerr << str0 << endl << endl;
 		}
 		else
 		{
 			str=str0;
 		}
-		cout << "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << endl << endl;
 /////////////////////////////////////////
-		cerr<< str << endl << endl;
 		if(!inPath)
 			str = str + com;
-		cerr << str << endl << endl;
 		const char* str2 =str.c_str();
 		////////////////////////////////////////////
-		cout << str2 << endl;
+	/*	cout << str2 << endl;
 		cout << "input: "<< inpt << endl;
 		cout << "commandName: "<<com<<endl;
 		cout << "argumentList: "<<arg<<endl;
-		////////////////////////////////////////////
+	*/	////////////////////////////////////////////
 		string temp="";
 		char ** arg2;
 		arg2 = new char*[BUFSIZE];
@@ -259,7 +291,6 @@ int main()
 		string  word="";
 		arg2[0]=new char[str.size()+1];
 		strcpy(arg2[num], str.c_str() );
-cout << arg2[0] << endl << endl;
 		unsigned i=0;
 		for(i=0; i<=arg.size(); i++)
 		{
@@ -335,7 +366,7 @@ cout << arg2[0] << endl << endl;
 		//cout << endl << cnt << ":"<<num << endl;
 		//while(cnt<=num)
 		//
-			int res=fork();
+			res=fork();
 			string st="";
 			bool  st2=false;
 			if(res==-1)
@@ -420,20 +451,13 @@ cout << arg2[0] << endl << endl;
 		{
 			if(path3.at(i)==':')
                         {
-				//cerr << endl;
                                 pathNum2++;
                         }
                         else
                         {
-                                //cerr << path3.at(i) << endl;
                                 path4[pathNum2]=path4[pathNum2]+path3.at(i);
                         }
 		}
-		/*for(int i=0; i<=pathNum2; i++)
-		{
-			cerr << path4[i]<< endl;
-		}*/
-		cerr << "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl << endl;
 		bool inPath2=false;
 		string str00="";
 		for(int i=0;(  (i<=pathNum2)&&(!inPath2) ) ; i++)
@@ -445,28 +469,26 @@ cout << arg2[0] << endl << endl;
 			str00=str00+s1;
 			if(access(str00.c_str(), X_OK) ==0)
 			{
-				cerr << "adfafadfadfadfafafaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\n\n";
                                 inPath2=true;
                                 pathNum=i;
 			}
-			else//ask professor about this part
+			else if ((i==pathNum2)&&(inPath))//ask professor about this part
 			{
-			//	perror("command not found");
+				perror("command not found");
 			}
 		}
 		if(!inPath2)
 		{
-			cerr << str00 << endl << endl;
 		}
 		else
 		{
 			//str3=str00;
 			s1=str00;
 		}
-		cerr << "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" << endl << endl;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////iwanttobehere
 							char* s2="";
-							char c[s1.size()+1];
+							char c[BUFSIZE];
+							c[s1.size()+1]='\0';
 							s2=c;
 							copy(s1.begin(), s1.end(), c);
 							c[s1.size()] = '\0';
@@ -578,8 +600,7 @@ cout << arg2[0] << endl << endl;
                                                 	arg3[m]=arg2[m];
 	                                        }
 				}
-			//	}
-				cerr <<"\nThis is the end\n\n";
+			//	cerr <<"\nThis is the end\n\n";
 					if(-1==execv(str2, arg3))
 					{
 						if(!cd)
@@ -589,8 +610,6 @@ cout << arg2[0] << endl << endl;
 			}
 			else 
 			{
-				//if(v.size()==1)
-			//		cnt=num;
 				if(-1==waitpid(v.at(0),0,WUNTRACED | WCONTINUED) )
 				{
 					perror("waitpid failed");
@@ -598,24 +617,6 @@ cout << arg2[0] << endl << endl;
 				}
 			}
 			cnt++;
-		/*for(int i=0; i<BUFSIZE; i++)
-		{
-			if(arg2[i]=="")
-				i=BUFSIZE;
-			delete arg2[i];
-		}
-		for(int i=0; i<BUFSIZE; i++)
-		{
-			if(arg3[i]=="")
-				i=BUFSIZE;
-			delete arg3[i];
-		}
-		for(int i=0; i<BUFSIZE; i++)
-		{
-			if(arg4[i]=="")
-				i=BUFSIZE;
-			delete arg4[i];
-		}*/
 		if(ext)
 			exit(0);
 	}
