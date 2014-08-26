@@ -1,7 +1,7 @@
 rshell.cpp
 ======
 
-rshell is a command shell that runs on Linux and will execute the user's commands.  It reads commands on one line. The commands are read in the form ' commandName [argumentList] [&]. 'commandName' is an executable program in '/usr/bin' and 'argumentList' is a list of zero or more words seperated by whitespace. If '&' is at the end of the command, then it will not wait for the command to finish and return to step 1.
+rshell is a command shell that runs on Linux and will execute the user's commands.  It reads commands on one line. The commands are read in the form ' commandName [argumentList] [&]. 'commandName' is an executable program in '$PATH' and 'argumentList' is a list of zero or more words seperated by whitespace. If '&' is at the end of the command, then it will not wait for the command to finish and return to step 1.
 
 If exit is called, then the program will end. This works no matter what is after exit as long as there is whitespace right after exit. This will not work if exit is not right at the beginning of what the user inputed.
 
@@ -21,6 +21,10 @@ This program has a few bugs within it. The program will not be able to handle an
 update to rshell.cpp
 =====
 rshell has been updated to include input redirection, output redirection, and piping.  Input redirection can be done by typing: [commandName] [argumentList] ">" [fileName]. fileName is the file you want to send the info to. This will replace any information in the file with the new text. By using ">>" instead of ">", the program will append the information instead of replacig it. There is a bug that makes any new files made using this method will have no permissions. Output redirection can be done by typing: [commandName] [argumentList] "<" [filename]. This will take the text in filename as the input for the program. Input redirection makes a file called '<' which has no permissions. This does not let me call input redirection again. Removing this file somes the problem, but it may output"<: No such file or directory". Input and output redirection can be combined with the following format: [commandName] [argumentList] "<" [fileNameIn] ">" [fileNameOut]. Piping only works with the format: [command1] [nothing] "|" [command2] [one argument here]. There is a bug with piping but typing in a few commands will solve it. Normally, it will freeze the program. This can be fixed with two commands. Typing in cntrl-z will exit the program. Typing fg will make the program run correctly again.
+
+second update to rshell.cpp
+=====
+rshell now works with many different commands and not just ones in "/bin/". The only new bug is calling "cd" will output an error message even though it works. Calling cntr-C will now kill any program being run in rshell but will not close rshell. cntrl-Z does something similar, but puts the program in the background. rshell does not have a way to bring it back to the forground.
 
 ls.cpp
 =====

@@ -1,0 +1,145 @@
+Script started on Mon 25 Aug 2014 08:39:25 PM PDT
+~
+svill014@well $ cd cs100/rshell
+~/cs100/rshell
+svill014@well $ ls
+[0m[01;34mbin[0m/  [0mLICENSE[0m  [0mMakefile[0m  [0mREADME.md[0m  [01;34msrc[0m/  [01;34mtests[0m/
+[m~/cs100/rshell
+svill014@well $ make
+echo "updating/making bin folder"
+updating/making bin folder
+([ ! -d bin ] && mkdir bin)||[ -d bin ]
+echo "building rshell"
+building rshell
+g++ -Wall -Werror -ansi -pedantic src/main.cpp -o bin/rshell
+echo "building ls"
+building ls
+g++ -Wall -Werror -ansi -pedantic src/ls.cpp -o bin/ls
+~/cs100/rshell
+svill014@well $ bin/rshell
+svill014@well.cs.ucr.edu$ ls
+bin  LICENSE  Makefile	README.md  src	tests
+svill014@well.cs.ucr.edu$ clear
+[H[2Jsvill014@well.cs.ucr.edu$ pwd
+/class/classes/svill014/cs100/rshell
+svill014@well.cs.ucr.edu$ clear
+[H[2Jsvill014@well.cs.ucr.edu$ ls -l -a
+total 40
+drwx------ 6 svill014 classes 4096 Aug 25 20:38 .
+drwx------ 6 svill014 classes 4096 Aug 25 20:36 ..
+drwx------ 2 svill014 classes 4096 Aug 25 20:39 bin
+drwx------ 8 svill014 classes 4096 Aug 25 20:38 .git
+-rw------- 1 svill014 classes  779 Aug 10 22:58 LICENSE
+-rw------- 1 svill014 classes  403 Aug 25 20:38 Makefile
+-rw------- 1 svill014 classes 4385 Aug 19 13:14 README.md
+drwx------ 2 svill014 classes 4096 Aug 25 20:38 src
+drwx------ 2 svill014 classes 4096 Aug 25 20:39 tests
+svill014@well.cs.ucr.edu$ touch a
+svill014@well.cs.ucr.edu$ touch b
+svill014@well.cs.ucr.edu$ mkdir c
+svill014@well.cs.ucr.edu$ ls -l
+total 32
+-rw------- 1 svill014 classes    0 Aug 25 20:40 a
+-rw------- 1 svill014 classes    0 Aug 25 20:40 b
+drwx------ 2 svill014 classes 4096 Aug 25 20:39 bin
+drwx------ 2 svill014 classes 4096 Aug 25 20:40 c
+-rw------- 1 svill014 classes  779 Aug 10 22:58 LICENSE
+-rw------- 1 svill014 classes  403 Aug 25 20:38 Makefile
+-rw------- 1 svill014 classes 4385 Aug 19 13:14 README.md
+drwx------ 2 svill014 classes 4096 Aug 25 20:38 src
+drwx------ 2 svill014 classes 4096 Aug 25 20:39 tests
+svill014@well.cs.ucr.edu$ cd bin
+svill014@well.cs.ucr.edu$ clear
+[H[2Jsvill014@well.cs.ucr.edu$ ls
+ls  rshell
+svill014@well.cs.ucr.edu$ cd ..
+svill014@well.cs.ucr.edu$ clear
+[H[2Jsvill014@well.cs.ucr.edu$ ls
+a  b  bin  c  LICENSE  Makefile  README.md  src  tests
+svill014@well.cs.ucr.edu$ cd
+cannot open:: No such file or directory
+svill014@well.cs.ucr.edu$ ls
+AppendixADancingBee.a2w  cs14	    Music			      Templates
+AppendixAFirstWorld.a2w  cs14.2     Pictures			      Videos
+CS 05			 cs14 lab3  Public			      WINDOWS
+cs10			 Desktop    src2
+cs100			 Documents  ssh -XY svill014@well.cs.ucr.edu
+CS12			 Downloads  temp
+svill014@well.cs.ucr.edu$ cd cs100/rshell
+svill014@well.cs.ucr.edu$ ls
+a  b  bin  c  LICENSE  Makefile  README.md  src  tests
+svill014@well.cs.ucr.edu$ clear
+[H[2Jsvill014@well.cs.ucr.edu$ echo hi
+hi
+svill014@well.cs.ucr.edu$ echo hi > a
+svill014@well.cs.ucr.edu$ cat a
+hi
+svill014@well.cs.ucr.edu$ ls > a
+svill014@well.cs.ucr.edu$ cat a
+a
+b
+bin
+c
+LICENSE
+Makefile
+README.md
+src
+tests
+svill014@well.cs.ucr.edu$ cat < a > b
+/bin/cat: <: No such file or directory
+svill014@well.cs.ucr.edu$ cat a
+a
+b
+bin
+c
+LICENSE
+Makefile
+README.md
+src
+tests
+svill014@well.cs.ucr.edu$ cat b
+a
+b
+bin
+c
+LICENSE
+Makefile
+README.md
+src
+tests
+svill014@well.cs.ucr.edu$ ls | grep e
+Makefile
+tests
+svill014@well.cs.ucr.edu$ cat
+a
+a
+d
+d
+svill014@well.cs.ucr.edu$ clear
+[H[2Jsvill014@well.cs.ucr.edu$ e make
+echo "updating/making bin folder"
+updating/making bin folder
+([ ! -d bin ] && mkdir bin)||[ -d bin ]
+echo "building rshell"
+building rshell
+g++ -Wall -Werror -ansi -pedantic src/main.cpp -o bin/rshell
+echo "building ls"
+building ls
+g++ -Wall -Werror -ansi -pedantic src/ls.cpp -o bin/ls
+svill014@well.cs.ucr.edu$ bin/rshell
+svill014@well.cs.ucr.edu$ echo I called rshell within rshell
+I called rshell within rshell
+svill014@well.cs.ucr.edu$ exit
+svill014@well.cs.ucr.edu$ echo I exited the second rshell and am in the first one again
+I exited the second rshell and am in the first one again
+svill014@well.cs.ucr.edu$ exit
+~/cs100/rshell
+svill014@well $ 
+~/cs100/rshell
+svill014@well $ quit
+bash: quit: command not found
+~/cs100/rshell
+svill014@well $ exit
+exit
+
+Script done on Mon 25 Aug 2014 08:49:25 PM PDT
